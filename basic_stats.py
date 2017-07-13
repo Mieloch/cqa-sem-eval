@@ -34,10 +34,10 @@ def jaccard_distance(original, related):
     return nltk.jaccard_distance(org_tokens, rel_tokens)
 
 
-soup = load('Q1_sample.xml')
+soup = load('SemEval2016-Task3-CQA-QL-train-part2.xml')
 original_questions = soup.findAll("OrgQuestion")
 
-with open('train_set_stat.csv', 'w') as csvfile:
+with open('train_set_stat_part2.csv', 'w') as csvfile:
     fieldnames = [ORGINAL_QUESTION_ID, RELATED_QUESTION_ID, JACCARD_DISTANCE, LENGTH_DIFFERENCE, RELEVANCE]
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator='\n')
     writer.writeheader()
@@ -46,12 +46,12 @@ with open('train_set_stat.csv', 'w') as csvfile:
         related_questions = original_question.findAll("RelQuestion")
         for related_question in related_questions:
             row = {}
-            related_question_body = remove_subject_from_question(related_question.RelQClean.string)
-            orginal_question_body = remove_subject_from_question(original_question.OrgQBody.string)
+            related_question_body = remove_subject_from_question(related_question.RelQBody.text)
+
+            orginal_question_body = remove_subject_from_question(original_question.OrgQBody.text)
             row[ORGINAL_QUESTION_ID] = original_question['ORGQ_ID']
             row[RELATED_QUESTION_ID] = related_question['RELQ_ID']
             row[JACCARD_DISTANCE] = jaccard_distance(orginal_question_body, related_question_body)
             row[LENGTH_DIFFERENCE] = length_difference(orginal_question_body, related_question_body)
             row[RELEVANCE] = related_question['RELQ_RELEVANCE2ORGQ']
-            print(row)
             writer.writerow(row)

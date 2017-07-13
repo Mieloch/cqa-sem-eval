@@ -44,8 +44,6 @@ with open('train_set_stat.csv', 'w') as csvfile:
 
     for original_question in original_questions:
         related_questions = original_question.findAll("RelQuestion")
-        if len(related_questions) == 0:
-            continue
         for related_question in related_questions:
             row = {}
             related_question_body = remove_subject_from_question(related_question.RelQClean.string)

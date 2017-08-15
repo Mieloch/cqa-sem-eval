@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import re
 import nltk
 import csv
+import spacy
+
 
 RELATED_QUESTION_ID = "related_question_id"
 
@@ -12,6 +14,8 @@ RELEVANCE = "relevance"
 LENGTH_DIFFERENCE = "length_difference"
 
 JACCARD_DISTANCE = "jaccard_distance"
+
+COSINE_SIMILARITY = "cosine_similarity"
 
 
 def load(file_name):
@@ -33,12 +37,18 @@ def jaccard_distance(original, related):
 
     return nltk.jaccard_distance(org_tokens, rel_tokens)
 
+def cosine_similarity(model, original, related):
+    org_tokens = model(original)
+    rel_tokens = model(related)
+    return org_tokens.similarity(rel_tokens)
 
-soup = load('SemEval2016-Task3-CQA-QL-train-part2.xml')
+model = spacy.load('en')
+
+soup = load('SemEval2016-Task3-CQA-QL-train-part1.xml')
 original_questions = soup.findAll("OrgQuestion")
 
-with open('train_set_stat_part2.csv', 'w') as csvfile:
-    fieldnames = [ORGINAL_QUESTION_ID, RELATED_QUESTION_ID, JACCARD_DISTANCE, LENGTH_DIFFERENCE, RELEVANCE]
+with open('train_set_stat_part1.csv', 'w') as csvfile:
+    fieldnames = [ORGINAL_QUESTION_ID, RELATED_QUESTION_ID, JACCARD_DISTANCE, LENGTH_DIFFERENCE, COSINE_SIMILARITY, RELEVANCE]
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator='\n')
     writer.writeheader()
 
@@ -51,7 +61,8 @@ with open('train_set_stat_part2.csv', 'w') as csvfile:
             orginal_question_body = remove_subject_from_question(original_question.OrgQBody.text)
             row[ORGINAL_QUESTION_ID] = original_question['ORGQ_ID']
             row[RELATED_QUESTION_ID] = related_question['RELQ_ID']
-            row[JACCARD_DISTANCE] = jaccard_distance(orginal_question_body, related_question_body)
+            row[JACCARD_DISTANCE] = round(jaccard_distance(orginal_question_body, related_question_body), 3)
             row[LENGTH_DIFFERENCE] = length_difference(orginal_question_body, related_question_body)
+            row[COSINE_SIMILARITY] = round(cosine_similarity(model, orginal_question_body, related_question_body), 3)
             row[RELEVANCE] = related_question['RELQ_RELEVANCE2ORGQ']
             writer.writerow(row)

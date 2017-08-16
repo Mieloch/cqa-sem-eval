@@ -1,0 +1,11 @@
+original_id,related_question_id,jaccard_distance,length_difference,cosine_similarity,bigram_similarity,relevance
+Q1,Q1_R1,0.842,23,0.918,1.0,PerfectMatch
+Q1,Q1_R6,0.886,244,0.913,1.0,Relevant
+Q1,Q1_R8,0.922,424,0.865,0.986,Irrelevant
+Q1,Q1_R10,0.892,169,0.915,1.0,Relevant
+Q1,Q1_R22,0.923,13,0.831,1.0,Irrelevant
+Q1,Q1_R25,0.952,169,0.767,1.0,Irrelevant
+Q1,Q1_R27,0.944,6,0.848,1.0,Irrelevant
+Q1,Q1_R32,0.971,118,0.87,1.0,PerfectMatch
+Q1,Q1_R43,0.981,299,0.864,1.0,Irrelevant
+Q1,Q1_R46,0.915,180,0.906,1.0,Irrelevant

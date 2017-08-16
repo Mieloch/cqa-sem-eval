@@ -1,21 +1,6 @@
 from bs4 import BeautifulSoup
 import re
 import nltk
-import csv
-import spacy
-
-
-RELATED_QUESTION_ID = "related_question_id"
-
-ORGINAL_QUESTION_ID = "original_id"
-
-RELEVANCE = "relevance"
-
-LENGTH_DIFFERENCE = "length_difference"
-
-JACCARD_DISTANCE = "jaccard_distance"
-
-COSINE_SIMILARITY = "cosine_similarity"
 
 
 def load(file_name):
@@ -37,32 +22,24 @@ def jaccard_distance(original, related):
 
     return nltk.jaccard_distance(org_tokens, rel_tokens)
 
+
 def cosine_similarity(model, original, related):
     org_tokens = model(original)
     rel_tokens = model(related)
     return org_tokens.similarity(rel_tokens)
 
-model = spacy.load('en')
 
-soup = load('SemEval2016-Task3-CQA-QL-train-part1.xml')
-original_questions = soup.findAll("OrgQuestion")
+def ngram_similarity(original, related, n=2):
+    org_tokens = nltk.word_tokenize(original)
+    rel_tokens = nltk.word_tokenize(related)
+    org_terms = set(nltk.ngrams(org_tokens, n))
+    rel_terms = set(nltk.ngrams(rel_tokens, n))
 
-with open('train_set_stat_part1.csv', 'w') as csvfile:
-    fieldnames = [ORGINAL_QUESTION_ID, RELATED_QUESTION_ID, JACCARD_DISTANCE, LENGTH_DIFFERENCE, COSINE_SIMILARITY, RELEVANCE]
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator='\n')
-    writer.writeheader()
+    shared_terms = org_terms.intersection(rel_terms)
+    all_terms = org_terms.union(rel_terms)
 
-    for original_question in original_questions:
-        related_questions = original_question.findAll("RelQuestion")
-        for related_question in related_questions:
-            row = {}
-            related_question_body = remove_subject_from_question(related_question.RelQBody.text)
+    dist = 1.0  # if =1.0 -> no common terms
+    if len(all_terms) > 0:
+        dist = 1.0 - (len(shared_terms) / float(len(all_terms)))
 
-            orginal_question_body = remove_subject_from_question(original_question.OrgQBody.text)
-            row[ORGINAL_QUESTION_ID] = original_question['ORGQ_ID']
-            row[RELATED_QUESTION_ID] = related_question['RELQ_ID']
-            row[JACCARD_DISTANCE] = round(jaccard_distance(orginal_question_body, related_question_body), 3)
-            row[LENGTH_DIFFERENCE] = length_difference(orginal_question_body, related_question_body)
-            row[COSINE_SIMILARITY] = round(cosine_similarity(model, orginal_question_body, related_question_body), 3)
-            row[RELEVANCE] = related_question['RELQ_RELEVANCE2ORGQ']
-            writer.writerow(row)
+    return dist

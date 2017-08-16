@@ -24,19 +24,18 @@ with open('csv/RelQuestion_to_RelComment_stats.csv', 'w') as csvfile:
     writer.writeheader()
 
     for original_question in original_questions:
-        related_questions = original_question.findAll("RelQuestion")
-        for related_question in related_questions:
-            related_comments = related_question.findAll("RelComment")
-            for related_comment in related_comments:
-                row = {}
-                related_comment_body = related_comment.RelCClean.text
-                related_question_body = basic_stats.remove_subject_from_question(related_question.RelQBody.text)
-
-                row[ORIGINAL_QUESTION_ID] = original_question['ORGQ_ID']
-                row[RELATED_QUESTION_ID] = related_question['RELQ_ID']
-                row[RELATED_COMMENT_ID] = related_comment['RELC_ID']
-                row[JACCARD_DISTANCE] = round(basic_stats.jaccard_distance(related_question_body, related_comment_body), 3)
-                row[LENGTH_DIFFERENCE] = basic_stats.length_difference(related_question_body, related_comment_body)
-                row[COSINE_SIMILARITY] = round(basic_stats.cosine_similarity(model, related_question_body, related_comment_body), 3)
-                row[RELEVANCE] = related_comment['RELC_RELEVANCE2RELQ']
-                writer.writerow(row)
+        thread = original_question.find("Thread")
+        related_question = thread.find("RelQuestion")
+        related_question_body = basic_stats.remove_subject_from_question(related_question.RelQBody.text)
+        related_comments = thread.findAll("RelComment")
+        for related_comment in related_comments:
+            row = {}
+            related_comment_body = related_comment.RelCClean.text
+            row[ORIGINAL_QUESTION_ID] = original_question['ORGQ_ID']
+            row[RELATED_QUESTION_ID] = related_question['RELQ_ID']
+            row[RELATED_COMMENT_ID] = related_comment['RELC_ID']
+            row[JACCARD_DISTANCE] = round(basic_stats.jaccard_distance(related_question_body, related_comment_body), 3)
+            row[LENGTH_DIFFERENCE] = basic_stats.length_difference(related_question_body, related_comment_body)
+            row[COSINE_SIMILARITY] = round(basic_stats.cosine_similarity(model, related_question_body, related_comment_body), 3)
+            row[RELEVANCE] = related_comment['RELC_RELEVANCE2RELQ']
+            writer.writerow(row)

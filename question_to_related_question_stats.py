@@ -12,10 +12,11 @@ COSINE_SIMILARITY = "cosine_similarity"
 BIGRAM_SIMILARITY = "bigram_similarity"
 
 model = spacy.load('en')
-soup = basic_stats.load('Q1_sample.xml')
+soup = basic_stats.load('data/Q1_sample.xml')
 original_questions = soup.findAll("OrgQuestion")
 
-with open('OrgQuestion_to_RelQuestion_stats.csv', 'w') as csvfile:
+
+with open('csv/OrgQuestion_to_RelQuestion_stats.csv', 'w') as csvfile:
     fieldnames = [ORGINAL_QUESTION_ID, RELATED_QUESTION_ID, JACCARD_DISTANCE, LENGTH_DIFFERENCE, COSINE_SIMILARITY, BIGRAM_SIMILARITY,
                   RELEVANCE]
     writer = csv.DictWriter(

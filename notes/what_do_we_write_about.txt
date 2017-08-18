@@ -1,0 +1,32 @@
+Wstêp z podpunktem opisuj¹cym motywacjê, cel oraz zakres pracy
+
+ - np. podzia³ pracy na subtaski, po jednej osobie na subtask
+
+
+
+Rozdzia³(y) „teoretyczny” definiuj¹cy(e) rozwa¿ane zagadnienie i opisuj¹cy aktualny stan
+wiedzy (np. modele matematyczne i wzory, opis stanu rzeczywistoœci, procedur biznesowych
+itp.)
+
+ - mo¿e ten rozdzia³ (rozdzia³y?) poœwiêciæ tej naszej 'exploratory analysis', pokazaæ wyniki podobieñstw (question-question, question-comment, question-external comment)
+   dla najprostszych miar (jaccard, cosinus, d³ugoœæ)
+
+
+
+Rozdzia³(y) opisuj¹cy(e) na wysokim poziomie abstrakcji ideê/sposób/metodê rozwi¹zania
+postawionego problemu (np. model powi¹zañ miêdzy danymi, struktura bazy danych,
+szczegó³owa specyfikacja wymagañ, diagramy u¿ycia, itp.)
+
+
+
+Rozdzia³(y) opisuj¹cy(e) techniczn¹ stronê rozwi¹zania (dokumentacja techniczna, istotne
+wyj¹tki z kodu Ÿród³owego programów)
+
+
+
+Rozdzia³(y) opisuj¹cy(e) przeprowadzone testy jednostkowe/integracyjne/funkcjonalne/akceptacyjne/efektywnoœciowe,
+oraz innego rodzaju uzyskane wyniki wraz z ich analiz¹
+
+
+
+Zakoñczenie zawieraj¹ce podsumowanie i wnioski

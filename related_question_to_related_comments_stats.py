@@ -17,7 +17,7 @@ RELEVANCE = "relevance"
 W2V_COSINE_SIMILARITY = "w2v_cosine_similarity"
 
 model = spacy.load('en')
-soup = basic_stats.load('data/Q1_sample.xml')
+soup = basic_stats.load('data/SemEval2016-Task3-CQA-QL-dev.xml')
 original_questions = soup.findAll("OrgQuestion")
 word2vec_model = gensim.models.Word2Vec.load('word2vec_model/Q1_model')
 

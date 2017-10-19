@@ -4,7 +4,7 @@ import nltk
 
 
 def load(file_name):
-    with open(file_name, 'r') as myfile:
+    with open(file_name, 'r', encoding="utf8") as myfile:
         return BeautifulSoup(myfile.read(), "xml")
 
 

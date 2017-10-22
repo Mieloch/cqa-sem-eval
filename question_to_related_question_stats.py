@@ -18,11 +18,11 @@ W2V_COSINE_SIMILARITY = "w2v_cosine_similarity"
 model = spacy.load('en')
 soup = basic_stats.load('data/SemEval2016-Task3-CQA-QL-dev.xml')
 original_questions = soup.findAll("OrgQuestion")
-word2vec_model = gensim.models.Word2Vec.load('word2vec_model/Q1_model')
+word2vec_model = gensim.models.Word2Vec.load('word2vec_model/SemEval2016-Task3-CQA-QL-dev_model')
 
 with open('csv/OrgQuestion_to_RelQuestion_stats.csv', 'w') as csvfile:
     fieldnames = [ORGINAL_QUESTION_ID, RELATED_QUESTION_ID, JACCARD_DISTANCE, LENGTH_DIFFERENCE, COSINE_SIMILARITY,
-                  BIGRAM_SIMILARITY,
+                  BIGRAM_SIMILARITY, W2V_COSINE_SIMILARITY,
                   RELEVANCE]
     writer = csv.DictWriter(
         csvfile, fieldnames=fieldnames, lineterminator='\n')
@@ -34,6 +34,9 @@ with open('csv/OrgQuestion_to_RelQuestion_stats.csv', 'w') as csvfile:
             row = {}
             related_question_body = basic_stats.remove_subject_from_question(
                 related_question.RelQBody.text)
+            if related_question_body == "":
+                print("invalid data in", related_question["RELQ_ID"], "reason: empty body")
+                continue
             related_question_vector = word2vec_utils.sentence_vectors_mean(
                 word2vec_utils.sentence2vectors(related_question_body, word2vec_model, lower_case=True))
 
@@ -52,8 +55,8 @@ with open('csv/OrgQuestion_to_RelQuestion_stats.csv', 'w') as csvfile:
                 basic_stats.cosine_similarity(model, original_question_body, related_question_body), 3)
             row[BIGRAM_SIMILARITY] = round(basic_stats.ngram_similarity(
                 original_question_body, related_question_body, n=2), 3)
-            row[W2V_COSINE_SIMILARITY] = word2vec_utils.vectors_cosine_similarity(original_question_vector,
-                                                                                  related_question_vector)
+            similarity = word2vec_utils.vectors_cosine_similarity(original_question_vector, related_question_vector)
+            row[W2V_COSINE_SIMILARITY] = similarity
 
             row[RELEVANCE] = related_question['RELQ_RELEVANCE2ORGQ']
             writer.writerow(row)

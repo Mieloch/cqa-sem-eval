@@ -19,11 +19,11 @@ W2V_COSINE_SIMILARITY = "w2v_cosine_similarity"
 model = spacy.load('en')
 soup = basic_stats.load('data/SemEval2016-Task3-CQA-QL-dev.xml')
 original_questions = soup.findAll("OrgQuestion")
-word2vec_model = gensim.models.Word2Vec.load('word2vec_model/Q1_model')
+word2vec_model = gensim.models.Word2Vec.load('word2vec_model/SemEval2016-Task3-CQA-QL-dev_model')
 
 with open('csv/RelQuestion_to_RelComment_stats.csv', 'w') as csvfile:
     fieldnames = [ORIGINAL_QUESTION_ID, RELATED_QUESTION_ID, RELATED_COMMENT_ID, JACCARD_DISTANCE, LENGTH_DIFFERENCE,
-                  COSINE_SIMILARITY, RELEVANCE]
+                  COSINE_SIMILARITY,W2V_COSINE_SIMILARITY, RELEVANCE]
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator='\n')
     writer.writeheader()
 
@@ -31,13 +31,16 @@ with open('csv/RelQuestion_to_RelComment_stats.csv', 'w') as csvfile:
         thread = original_question.find("Thread")
         related_question = thread.find("RelQuestion")
         related_question_body = basic_stats.remove_subject_from_question(related_question.RelQBody.text)
+        if related_question_body == "":
+            print("invalid data in", related_question["RELQ_ID"], "reason: empty body")
+            continue
         related_question_vector = word2vec_utils.sentence_vectors_mean(
             word2vec_utils.sentence2vectors(related_question_body, word2vec_model, lower_case=True))
 
         related_comments = thread.findAll("RelComment")
         for related_comment in related_comments:
             row = {}
-            related_comment_body = related_comment.RelCClean.text
+            related_comment_body = related_comment.RelCText.text
             related_comment_vector = word2vec_utils.sentence_vectors_mean(
                 word2vec_utils.sentence2vectors(related_comment_body, word2vec_model, lower_case=True))
 

@@ -2,10 +2,11 @@ import nltk
 import numpy as np
 
 import sklearn
-
+import math
 
 def vectors_cosine_similarity(vector1, vector2):
-    return sklearn.metrics.pairwise.cosine_similarity(vector1.reshape(1, -1), vector2.reshape(1, -1))[0]
+    similarity = sklearn.metrics.pairwise.cosine_similarity(vector1.reshape(1, -1), vector2.reshape(1, -1))
+    return round(similarity[0][0],3)
 
 
 def tokenize_to_lower_case(sentence):
@@ -24,11 +25,14 @@ def sentence2vectors(sentence, word2vec_model, lower_case=False):
 
 
 def sentence_vectors_mean(vectors_by_tokens):
-    inited = False
-    result = None
-    for key, value in vectors_by_tokens.items():
-        if not inited:
-            result = np.zeros(value.shape, dtype=np.float64)
-            inited = True
-        result += np.asarray(value)
-    return result / len(vectors_by_tokens)
+    try:
+        inited = False
+        result = None
+        for key, value in vectors_by_tokens.items():
+            if not inited:
+                result = np.zeros(value.shape, dtype=np.float64)
+                inited = True
+            result += np.asarray(value)
+        return result / len(vectors_by_tokens)
+    except:
+        print("lipa")

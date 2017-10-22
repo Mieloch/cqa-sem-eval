@@ -14,16 +14,14 @@ COSINE_SIMILARITY = "cosine_similarity"
 BIGRAM_SIMILARITY = "bigram_similarity"
 W2V_COSINE_SIMILARITY = "w2v_cosine_similarity"
 
-
 model = spacy.load('en')
 soup = basic_stats.load('data/SemEval2016-Task3-CQA-QL-dev.xml')
 original_questions = soup.findAll("OrgQuestion")
-word2vec_model = gensim.models.Word2Vec.load('word2vec_model/Q1_model')
-
+word2vec_model = gensim.models.Word2Vec.load('word2vec_model/SemEval2016-Task3-CQA-QL-dev_model')
 
 with open('csv/OrgQuestion_to_RelComment_stats.csv', 'w') as csvfile:
     fieldnames = [ORIGINAL_QUESTION_ID, RELATED_COMMENT_ID, JACCARD_DISTANCE,
-                  LENGTH_DIFFERENCE, COSINE_SIMILARITY, BIGRAM_SIMILARITY, RELEVANCE]
+                  LENGTH_DIFFERENCE, COSINE_SIMILARITY, BIGRAM_SIMILARITY, W2V_COSINE_SIMILARITY, RELEVANCE]
     writer = csv.DictWriter(
         csvfile, fieldnames=fieldnames, lineterminator='\n')
     writer.writeheader()
@@ -32,7 +30,11 @@ with open('csv/OrgQuestion_to_RelComment_stats.csv', 'w') as csvfile:
         related_comments = original_question.findAll("RelComment")
         for related_comment in related_comments:
             row = {}
-            related_comment_body = related_comment.RelCClean.text
+            related_comment_body = related_comment.RelCText.text
+            if related_comment_body == "":
+                print("invalid data in", related_comment["RELC_ID"], "reason: empty body")
+                continue
+
             related_comment_vector = word2vec_utils.sentence_vectors_mean(
                 word2vec_utils.sentence2vectors(related_comment_body, word2vec_model, lower_case=True))
 
@@ -40,9 +42,6 @@ with open('csv/OrgQuestion_to_RelComment_stats.csv', 'w') as csvfile:
                 original_question.OrgQBody.text)
             original_question_vector = word2vec_utils.sentence_vectors_mean(
                 word2vec_utils.sentence2vectors(original_question_body, word2vec_model, lower_case=True))
-
-
-
 
             row[ORIGINAL_QUESTION_ID] = original_question['ORGQ_ID']
             row[RELATED_COMMENT_ID] = related_comment['RELC_ID']

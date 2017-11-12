@@ -1,7 +1,7 @@
 import gensim
-import nltk
+
 import basic_stats
-from word2vec_utils import tokenize_to_lower_case
+from word2vec_model.word2vec_utils import tokenize_to_lower_case
 
 soup = basic_stats.load('data/SemEval2016-Task3-CQA-QL-dev.xml')
 
@@ -42,4 +42,4 @@ for original_question in original_questions:
 print(tokens_count)
 # print(sentences)
 model = gensim.models.Word2Vec(sentences, min_count=1, window=3, iter=100000, size=100)
-model.save('word2vec_model/SemEval2016-Task3-CQA-QL-dev_model')
+model.save('SemEval2016-Task3-CQA-QL-dev_model')

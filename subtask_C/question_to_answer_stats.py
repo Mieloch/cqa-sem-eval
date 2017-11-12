@@ -1,9 +1,9 @@
+import gensim
+import spacy
+
 import basic_stats
 import csv
-import spacy
-import gensim
-# CSV file headers
-import word2vec_utils
+from word2vec_model import word2vec_utils
 
 ORIGINAL_QUESTION_ID = "question_id"
 RELATED_COMMENT_ID = "related_comment_id"
@@ -19,7 +19,7 @@ soup = basic_stats.load('data/SemEval2016-Task3-CQA-QL-dev.xml')
 original_questions = soup.findAll("OrgQuestion")
 word2vec_model = gensim.models.Word2Vec.load('word2vec_model/SemEval2016-Task3-CQA-QL-dev_model')
 
-with open('csv/OrgQuestion_to_RelComment_stats.csv', 'w') as csvfile:
+with open('OrgQuestion_to_RelComment_stats.csv', 'w') as csvfile:
     fieldnames = [ORIGINAL_QUESTION_ID, RELATED_COMMENT_ID, JACCARD_DISTANCE,
                   LENGTH_DIFFERENCE, COSINE_SIMILARITY, BIGRAM_SIMILARITY, W2V_COSINE_SIMILARITY, RELEVANCE]
     writer = csv.DictWriter(

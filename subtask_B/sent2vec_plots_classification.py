@@ -17,15 +17,15 @@ def make_meshgrid(x, y, h=.05):
 
 
 def string_to_class(text):
-    if text == "Good":
+    if text == "PerfectMatch":
         return 0
-    if text == "PotentiallyUseful":
+    if text == "Relevant":
         return 1
-    if text == "Bad":
+    if text == "Irrelevant":
         return 2
 
 
-with open('../csv/OrgQuestion_to_RelComment_stats.csv') as csvfile:
+with open('OrgQuestion_to_RelQuestion_stats.csv') as csvfile:
     # load data
     Y = []
     X = []
@@ -45,8 +45,8 @@ with open('../csv/OrgQuestion_to_RelComment_stats.csv') as csvfile:
     Y = Y.reshape(-1, 1)
     X_train = X_train.reshape(-1, 1)
     X_test = X_test.reshape(-1, 1)
-    # Y_train = Y_train.reshape(-1, 1)
-    # Y_test = Y_test.reshape(-1, 1)
+    Y_train = Y_train.reshape(-1, 1)
+    Y_test = Y_test.reshape(-1, 1)
 
     # classify
     clf = LogisticRegression(multi_class="multinomial", solver="lbfgs")
@@ -62,12 +62,12 @@ with open('../csv/OrgQuestion_to_RelComment_stats.csv') as csvfile:
     Z = Z.reshape(yy.shape)
 
     # plots
-    plt.ylabel('cosine similarity')
+    plt.ylabel('sentence2vec cosine similarity')
     plt.xlabel('n-th sample')
     plt.pcolormesh(xx, yy, Z, cmap=plt.cm.Paired)
     plt.scatter(x_axis, X_test, c=Y_test)
-    irrelevant_label = mpatches.Patch(color=(0.5, 0.0, 0.0), label='Bad')
-    relevant_label = mpatches.Patch(color=(0.5, 1, 0.5), label='PotentiallyUseful')
-    perfect_match_label = mpatches.Patch(color=(0.0, 0.0, 0.5), label='Good')
+    irrelevant_label = mpatches.Patch(color=(0.5, 0.0, 0.0), label='Irrelevant')
+    relevant_label = mpatches.Patch(color=(0.5, 1, 0.5), label='Relevant')
+    perfect_match_label = mpatches.Patch(color=(0.0, 0.0, 0.5), label='Perfect match')
     plt.legend(handles=[irrelevant_label, relevant_label, perfect_match_label])
     plt.show()

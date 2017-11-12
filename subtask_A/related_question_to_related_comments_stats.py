@@ -1,10 +1,9 @@
-import basic_stats
-import csv
+import gensim
 import spacy
 
-import gensim
-
-import word2vec_utils
+import basic_stats
+import csv
+from word2vec_model import word2vec_utils
 
 ORIGINAL_QUESTION_ID = "question_id"
 RELATED_QUESTION_ID = "related_question_id"

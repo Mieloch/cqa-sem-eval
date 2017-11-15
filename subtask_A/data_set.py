@@ -5,6 +5,7 @@ import gensim
 
 
 def subtask_A_word2vec_dataset(xml_file, word2vec_model):
+    print("Loading word2vec data set")
     data_set = subtask_A_raw_dataset(xml_file)
     result = []
     for sample in data_set:
@@ -19,11 +20,12 @@ def subtask_A_word2vec_dataset(xml_file, word2vec_model):
             ("comment", comment_vector),
             ("relevance", label_to_class(sample["relevance"]))])
         result.append(transformed_sample)
-        # print(data_set)
+    print("Loading word2vec data set [DONE]")
     return result
 
 
 def subtask_A_raw_dataset(xml_file):
+    print("Loading raw data set")
     soup = load(xml_file)
     threads = soup.findAll('Thread', recursive=True)
     # print(len(threads))
@@ -46,6 +48,7 @@ def subtask_A_raw_dataset(xml_file):
                                     ("relevance", comment['RELC_RELEVANCE2RELQ'])])
             # print(data_set_sample)
             data_set.append(data_set_sample)
+    print("Loading raw data set [DONE]")
     return data_set
 
 

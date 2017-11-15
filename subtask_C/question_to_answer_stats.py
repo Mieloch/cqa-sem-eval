@@ -36,12 +36,12 @@ with open('OrgQuestion_to_RelComment_stats.csv', 'w') as csvfile:
                 continue
 
             related_comment_vector = word2vec_utils.sentence_vectors_mean(
-                word2vec_utils.sentence2vectors(related_comment_body, word2vec_model, lower_case=True))
+                word2vec_utils.sentence2vectors(related_comment_body, word2vec_model, to_lower_case=True))
 
             original_question_body = basic_stats.remove_subject_from_question(
                 original_question.OrgQBody.text)
             original_question_vector = word2vec_utils.sentence_vectors_mean(
-                word2vec_utils.sentence2vectors(original_question_body, word2vec_model, lower_case=True))
+                word2vec_utils.sentence2vectors(original_question_body, word2vec_model, to_lower_case=True))
 
             row[ORIGINAL_QUESTION_ID] = original_question['ORGQ_ID']
             row[RELATED_COMMENT_ID] = related_comment['RELC_ID']

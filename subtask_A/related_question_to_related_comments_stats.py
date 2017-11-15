@@ -34,14 +34,14 @@ with open('csv/RelQuestion_to_RelComment_stats.csv', 'w') as csvfile:
             print("invalid data in", related_question["RELQ_ID"], "reason: empty body")
             continue
         related_question_vector = word2vec_utils.sentence_vectors_mean(
-            word2vec_utils.sentence2vectors(related_question_body, word2vec_model, lower_case=True))
+            word2vec_utils.sentence2vectors(related_question_body, word2vec_model, to_lower_case=True))
 
         related_comments = thread.findAll("RelComment")
         for related_comment in related_comments:
             row = {}
             related_comment_body = related_comment.RelCText.text
             related_comment_vector = word2vec_utils.sentence_vectors_mean(
-                word2vec_utils.sentence2vectors(related_comment_body, word2vec_model, lower_case=True))
+                word2vec_utils.sentence2vectors(related_comment_body, word2vec_model, to_lower_case=True))
 
             row[ORIGINAL_QUESTION_ID] = original_question['ORGQ_ID']
             row[RELATED_QUESTION_ID] = related_question['RELQ_ID']

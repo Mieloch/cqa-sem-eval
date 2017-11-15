@@ -37,12 +37,12 @@ with open('OrgQuestion_to_RelQuestion_stats.csv', 'w') as csvfile:
                 print("invalid data in", related_question["RELQ_ID"], "reason: empty body")
                 continue
             related_question_vector = word2vec_utils.sentence_vectors_mean(
-                word2vec_utils.sentence2vectors(related_question_body, word2vec_model, lower_case=True))
+                word2vec_utils.sentence2vectors(related_question_body, word2vec_model, to_lower_case=True))
 
             original_question_body = basic_stats.remove_subject_from_question(
                 original_question.OrgQBody.text)
             original_question_vector = word2vec_utils.sentence_vectors_mean(
-                word2vec_utils.sentence2vectors(original_question_body, word2vec_model, lower_case=True))
+                word2vec_utils.sentence2vectors(original_question_body, word2vec_model, to_lower_case=True))
 
             row[ORGINAL_QUESTION_ID] = original_question['ORGQ_ID']
             row[RELATED_QUESTION_ID] = related_question['RELQ_ID']

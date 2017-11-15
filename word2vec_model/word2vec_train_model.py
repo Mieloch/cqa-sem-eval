@@ -3,7 +3,7 @@ import gensim
 import basic_stats
 from word2vec_model.word2vec_utils import tokenize_to_lower_case
 
-soup = basic_stats.load('data/SemEval2016-Task3-CQA-QL-dev.xml')
+soup = basic_stats.load('../data/Q1_sample.xml')
 
 original_questions = soup.findAll("OrgQuestion")
 
@@ -35,11 +35,11 @@ for original_question in original_questions:
     # related comments
     related_comments = original_question.findAll("RelComment")
     for related_comment in related_comments:
-        tokenize = tokenize_to_lower_case(related_comment.RelCText.text)
+        tokenize = tokenize_to_lower_case(related_comment.RelCClean.text)
         tokens_count += len(tokenize)
         sentences.append(tokenize)
 
 print(tokens_count)
 # print(sentences)
-model = gensim.models.Word2Vec(sentences, min_count=1, window=3, iter=100000, size=100)
-model.save('SemEval2016-Task3-CQA-QL-dev_model')
+model = gensim.models.Word2Vec(sentences, min_count=1, window=3, iter=1000, size=100)
+model.save('Q1_model')

@@ -41,8 +41,12 @@ with open('OrgQuestion_to_RelQuestion_stats.csv') as csvfile:
 
     # split data to train and test set
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
-    X = X.reshape(-1, 1)
-    Y = Y.reshape(-1, 1)
+    # sort test test
+    test_set = list(zip(X_test, Y_test))
+    test_set.sort(key=lambda d: d[1])
+    X_test = np.array([i[0] for i in test_set])
+    Y_test = np.array([i[1] for i in test_set])
+
     X_train = X_train.reshape(-1, 1)
     X_test = X_test.reshape(-1, 1)
     Y_train = Y_train.reshape(-1, 1)
@@ -52,7 +56,8 @@ with open('OrgQuestion_to_RelQuestion_stats.csv') as csvfile:
     clf = LogisticRegression(multi_class="multinomial", solver="lbfgs")
     clf.fit(X_train, Y_train)
     # evaluate
-    print("Accuracy score =", accuracy_score(Y_test, clf.predict(X_test)))
+    print("Test set accuracy score =", accuracy_score(Y_test, clf.predict(X_test)))
+    print("Train set accuracy score =", accuracy_score(Y_train, clf.predict(X_train)))
 
     # prepare contour mesh grid and colors
     x_axis = np.arange(0, len(X_test), 1)

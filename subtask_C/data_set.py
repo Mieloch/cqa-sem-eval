@@ -1,13 +1,15 @@
 from basic_stats import load, remove_subject_from_question
 from bs4 import BeautifulSoup
-from sklearn.preprocessing import LabelEncoder
 import word2vec_model.word2vec_utils as word2vec
 import gensim
+import numpy as np
 
 def word2vec_dataset(xml_file, word2vec_model):
     print("Loading subtask C word2vec dataset")
     raw_dataset_dict = raw_dataset(xml_file)
-    result = []
+    questions = []
+    comments = []
+    relevace_labels = []
     for sample in raw_dataset_dict:
         orgq_vector = word2vec.sentence_vectors_mean(
             word2vec.sentence2vectors(sample["orgq"], word2vec_model, exclude_stopwords=True, to_lower_case=True))
@@ -15,13 +17,11 @@ def word2vec_dataset(xml_file, word2vec_model):
             word2vec.sentence2vectors(sample["relc"], word2vec_model, to_lower_case=True, exclude_stopwords=True))
         if len(orgq_vector) == 0 or len(relc_vector) == 0:
             continue
-        transformed_sample = dict([
-            ("orgq", orgq_vector),
-            ("relc", relc_vector),
-            ("relc_orgq_relevance", labels_to_classes([sample["relc_orgq_relevance"]])[0])])
-        result.append(transformed_sample)
+        questions.append(orgq_vector)
+        comments.append(relc_vector)
+        relevace_labels.append(sample["relc_orgq_relevance"])
     print("Loading subtask C word2vec dataset [DONE]")
-    return result
+    return np.asarray(questions), np.asarray(comments), np.asarray(relevace_labels)
 
 
 def raw_dataset(xml_file):
@@ -52,13 +52,6 @@ def raw_dataset(xml_file):
     return dataset
 
 
-def labels_to_classes(labels):
-    le = LabelEncoder()
-    le.fit(["Good","PotentiallyUseful","Bad"])
-    return le.transform(labels)
-
 #model = word2vec.load_word2vec_model("SemEval2016-Task3-CQA-QL-dev_model")
-#d = word2vec_dataset("data/SemEval2016-Task3-CQA-QL-dev.xml",model)
+#q, c, r = word2vec_dataset("../data/SemEval2016-Task3-CQA-QL-dev.xml", model)
 #d = raw_dataset("data/Q1_sample.xml")
-
-#print(d)

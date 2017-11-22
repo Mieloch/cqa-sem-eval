@@ -9,7 +9,7 @@ import numpy as np
 import keras
 
 
-TRAINING_ITERATIONS = 10
+TRAINING_ITERATIONS = 100
 
 
 def create_model(units=[1], activ=["elu"], init=[keras.initializers.he_normal()], input_dim=200):
@@ -23,7 +23,7 @@ def create_model(units=[1], activ=["elu"], init=[keras.initializers.he_normal()]
     
     model.compile(optimizer=keras.optimizers.SGD(lr=0.03, momentum=0.0, decay=0.0, nesterov=False),
               loss="categorical_crossentropy",
-              metrics=['accuracy'])
+              metrics=[precision, recall])
     return model
 
 
@@ -44,8 +44,8 @@ units = [50]
 model = create_model(units=units, input_dim=X_train.shape[1])
 
 # train model
-train_log = dict([("acc", []), ("loss", [])])
-test_log = dict([("acc", []), ("loss", [])])
+train_log = dict([("prec", []), ("rec", []), ("loss", [])])
+test_log = dict([("prec", []), ("rec", []), ("loss", [])])
 
 for i in range(0, TRAINING_ITERATIONS, 1):
     print("+++ ITERATION {}/{} +++".format(i, TRAINING_ITERATIONS))
@@ -53,20 +53,32 @@ for i in range(0, TRAINING_ITERATIONS, 1):
 
     print("+++ Evaluate train set +++")
     score = model.evaluate(X_train, Y_train, batch_size=64)
-    train_log["acc"].append(score[1])
+    train_log["prec"].append(score[1])
+    train_log["rec"].append(score[2])
     train_log["loss"].append(score[0])
     print("+++ Evaluate test set +++")
     score = model.evaluate(X_test, Y_test, batch_size=64)
-    test_log["acc"].append(score[1])
+    test_log["prec"].append(score[1])
+    test_log["rec"].append(score[2])
     test_log["loss"].append(score[0])
 
 # plot learning process
-x = np.arange(0, len(test_log["acc"]), step=1)
-test_loss, test_acc, train_loss, train_acc = plt.plot(x, test_log["loss"], 'r--', x, test_log["acc"], 'r', x, train_log["loss"], 'g--', x, train_log["acc"], 'g')
-test_loss.set_label("loss (test)")
-test_acc.set_label("acc (test)")
+x = np.arange(0, TRAINING_ITERATIONS, step=1)
+
+plt.subplot(211)
+train_loss, train_prec, train_rec = plt.plot(x, train_log["loss"], 'r', x, train_log["prec"], 'g', x, train_log["rec"], 'b')
 train_loss.set_label("loss (train)")
-train_acc.set_label("acc (train)")
-plt.legend(handles=[test_loss, test_acc, train_loss, train_acc], bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-plt.title("Feedforward")
+train_prec.set_label("precision (train)")
+train_rec.set_label("recall (train)")
+plt.legend(handles=[train_loss, train_prec, train_rec], bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+plt.title("Feedforward - train")
+
+plt.subplot(212)
+test_loss, test_prec, test_rec = plt.plot(x, test_log["loss"], 'r', x, test_log["prec"], 'g', x, test_log["rec"], 'b')
+test_loss.set_label("loss (test)")
+test_prec.set_label("precision (test)")
+test_rec.set_label("recall (test)")
+plt.legend(handles=[test_loss, test_prec, test_rec], bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+plt.title("Feedforward - test")
+
 plt.savefig("subtask_C\plot.png", bbox_inches = "tight")

@@ -53,5 +53,5 @@ def raw_dataset(xml_file):
 
 
 #model = word2vec.load_word2vec_model("SemEval2016-Task3-CQA-QL-dev_model")
-#q, c, r = word2vec_dataset("../data/SemEval2016-Task3-CQA-QL-dev.xml", model)
+#q, c, r = word2vec_dataset("data/SemEval2016-Task3-CQA-QL-dev.xml", model)
 #d = raw_dataset("data/Q1_sample.xml")

@@ -1,4 +1,4 @@
-from subtask_C.data_set import word2vec_dataset
+from subtask_C.data_set import sentences_dataset
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.model_selection import train_test_split
 from keras.layers import Dense, Dropout
@@ -29,7 +29,7 @@ def create_model(units=[1], activ=["elu"], init=[keras.initializers.he_normal()]
 
 #load X, y
 word2vec_model = word2vec.load_word2vec_model("SemEval2016-Task3-CQA-QL-dev_model")
-org_questions, rel_comments, y = word2vec_dataset("data/SemEval2016-Task3-CQA-QL-dev.xml", word2vec_model)
+org_questions, rel_comments, y = sentences_dataset("data/SemEval2016-Task3-CQA-QL-dev.xml", word2vec_model)
 X = np.concatenate((org_questions, rel_comments), axis=1)
 
 #transform class labels
@@ -40,8 +40,10 @@ y = lb.fit_transform(y)
 X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
 #create compiled model
-units = [50]
-model = create_model(units=units, input_dim=X_train.shape[1])
+units = [50, 100, 100]
+activ=["elu", "elu", "elu"]
+init=[keras.initializers.he_normal(), keras.initializers.he_normal(), keras.initializers.he_normal()]
+model = create_model(units=units, init=init, activ=activ, input_dim=X_train.shape[1])
 
 # train model
 train_log = dict([("prec", []), ("rec", []), ("loss", [])])

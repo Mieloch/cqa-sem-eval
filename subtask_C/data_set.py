@@ -2,7 +2,6 @@ from basic_stats import load
 import word2vec_model.word2vec_utils as word2vec
 import numpy as np
 import pandas as pd
-import nltk
 from stop_words import get_stop_words
 from itertools import filterfalse
 
@@ -59,7 +58,6 @@ def word_vecs_dataset(xml_file, word2vec_model):
     vec_dataframe.columns = ["question", "comments", "relevance"]
     print("Loading subtask C vectors dataset [DONE]")
     return vec_dataframe
-
 
 
 stop_words = get_stop_words('en')
@@ -155,5 +153,4 @@ def sentences_dataset(xml_file, word2vec_model):
         relevace_labels.append(sample["relc_orgq_relevance"])
     print("Loading subtask C sentences dataset [DONE]")
     return np.asarray(questions), np.asarray(comments), np.asarray(relevace_labels)
-
 

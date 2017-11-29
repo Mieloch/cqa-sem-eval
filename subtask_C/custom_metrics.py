@@ -13,5 +13,3 @@ def recall(y_true, y_pred):
     possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
     recall = true_positives / possible_positives
     return recall
-
-#print(precision(K.array([1, 1]), K.array([1 ,1])))

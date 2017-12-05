@@ -1,9 +1,20 @@
 import gensim
-
+import argparse
 import basic_stats
-from word2vec_model.word2vec_utils import tokenize_to_lower_case
+from word2vec_utils import tokenize_to_lower_case
 
-soup = basic_stats.load('../data/Q1_sample.xml')
+parser = argparse.ArgumentParser()
+parser.add_argument('--subtask-e',
+                    dest='subtask_e',
+                    help='Prepare word embeddings for subtask E (different dataset)',
+                    action='store_true')
+
+args = parser.parse_args()
+
+if args.subtask_e:
+    soup = basic_stats.load('../data/subtask_e_sample.xml')
+else:
+    soup = basic_stats.load('../data/Q1_sample.xml')
 
 original_questions = soup.findAll("OrgQuestion")
 
@@ -35,9 +46,20 @@ for original_question in original_questions:
     # related comments
     related_comments = original_question.findAll("RelComment")
     for related_comment in related_comments:
-        tokenize = tokenize_to_lower_case(related_comment.RelCClean.text)
+        tokenize = tokenize_to_lower_case(related_comment.RelCText.text)
+        # tokenize = tokenize_to_lower_case(related_comment.RelCClean.text)
         tokens_count += len(tokenize)
         sentences.append(tokenize)
+
+    # related answers (only for subtask e)
+    if args.subtask_e:
+        related_answers = original_question.findAll("RelAnswer")
+        for related_answer in related_answers:
+            body = related_answer.RelAText.text
+            tokenize = tokenize_to_lower_case(body)
+            tokens_count += len(tokenize)
+            sentences.append(tokenize)
+
 
 print(tokens_count)
 # print(sentences)

@@ -7,10 +7,14 @@ from keras.models import Model
 from keras.layers import Input, LSTM, Merge, Dense
 from keras.preprocessing.sequence import pad_sequences
 import keras.backend as K
-from keras.optimizers import Adadelta
+from keras.optimizers import Adam
+from keras.initializers import he_normal, identity
 import time
+import os
+import csv
 
-TRAINING_ITERATIONS = 10
+
+TRAINING_ITERATIONS = 100
 
 
 # load dataframe
@@ -42,10 +46,10 @@ assert X_train['question'].shape == X_train['comment'].shape
 assert len(X_train['question']) == len(Y_train)
 
 # model variables
-n_hidden = 50
+n_hidden = 100
 gradient_clipping_norm = 1.25
 batch_size = 32
-n_epoch = 5
+n_epoch = 10
 
 def exponent_neg_manhattan_distance(left, right):
     ''' Helper function for the similarity estimate of the LSTMs outputs'''
@@ -65,12 +69,15 @@ comment_output = shared_lstm(comment_input)
 # Calculates the distance as defined by the MaLSTM model
 malstm_distance = Merge(mode=lambda x: exponent_neg_manhattan_distance(x[0], x[1]), output_shape=lambda x: (x[0][0], 1))([question_output, comment_output])
 
+# Additional hidden dense
+hidden_dense = Dense(n_hidden, activation="elu", kernel_initializer=he_normal())(malstm_distance)
+
 # Softmax output for classification
-output_category = Dense(3, activation="softmax")(malstm_distance)
+output_category = Dense(3, activation="softmax")(hidden_dense)
 
 # Pack it all up into a model
 malstm = Model([question_input, comment_input], [output_category])
-optimizer = Adadelta(clipnorm=gradient_clipping_norm)
+optimizer = Adam(clipnorm=gradient_clipping_norm)
 malstm.compile(loss='mean_squared_error', optimizer=optimizer, metrics=["accuracy"])
 
 # train model
@@ -128,4 +135,23 @@ plt.legend(handles=[test_loss, test_acc], bbox_to_anchor=(1.05, 1), loc=2, borde
 
 plt.title("MaLSTM - test")
 
-plt.savefig("subtask_C\plots\MaLSTM_" + time.strftime("%Y%m%d_%H%M%S") + ".png", bbox_inches="tight")
+timestamp = time.strftime("%Y%m%d_%H%M%S")
+modelname = "MaLSTM"
+path = "subtask_C\\plots\\" + modelname + "_" + timestamp
+os.makedirs(path)
+plt.savefig(path + "\plot.png", bbox_inches="tight")
+
+with open(path + "\params.csv", 'w') as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=["iterations",
+                                                 "epochs",
+                                                 "n_hidden",
+                                                 "optimizer",
+                                                 "gradient clipping norm"])
+    writer.writeheader()
+    writer.writerow({"iterations": str(TRAINING_ITERATIONS),
+                     "epochs": str(n_epoch),
+                     "n_hidden": str(n_hidden),
+                     "optimizer": "Adam",
+                     "gradient clipping norm": str(gradient_clipping_norm)})
+    csvfile.close()
+

@@ -1,11 +1,40 @@
-from basic_stats import load
-import pandas as pd
+import os
+import re
 from itertools import filterfalse
-from stop_words import get_stop_words
-import word2vec_model.word2vec_utils as word2vec
-from bs4 import BeautifulSoup
-from basic_stats import remove_subject_from_question
+import gensim
+import nltk
 import numpy as np
+import pandas as pd
+from bs4 import BeautifulSoup
+from stop_words import get_stop_words
+
+
+
+def tokenize_to_lower_case(sentence):
+    tokenize = nltk.word_tokenize(sentence)
+    return [t.lower() for t in tokenize]
+
+def load(file_name):
+    with open(file_name, 'r', encoding="utf8") as myfile:
+        return BeautifulSoup(myfile.read(), "xml")
+
+def load_word2vec_model(model_name):
+    print("Loading word2vec model {}".format(model_name))
+    path = "../word2vec_model/"
+    model = None
+    if model_name == "Q1_model" or model_name == "SemEval2016-Task3-CQA-QL-dev_model":
+        model = gensim.models.Word2Vec.load(path + "/" + model_name)
+    elif model_name == "GoogleNews-vectors-negative300.bin":
+        model = gensim.models.KeyedVectors.load_word2vec_format(path + "/" + model_name,
+                                                                binary=True)
+    else:
+        raise Exception("Unknown word2vec model {}".format(model_name))
+    print("Loading word2vec model {} [DONE]".format(model_name))
+    return model
+
+
+def remove_subject_from_question(question):
+    return re.sub('.+\/\/\ ', '', question)
 
 
 def append_zero_padding(sentence_list, max_padding_length):
@@ -40,7 +69,7 @@ def get_subtask_A_data_from_file(xml_file, model_name):
     questions_data = []
     comments_data = []
     relevances_data = []
-    word2vec_model = word2vec.load_word2vec_model(model_name)
+    word2vec_model = load_word2vec_model(model_name)
     for thread in threads:
         thread_soup = BeautifulSoup(str(thread), "xml")
         question = thread_soup.RelQuestion.RelQBody.text
@@ -65,7 +94,7 @@ def get_subtask_A_data_from_file(xml_file, model_name):
 
 def text_to_word_vectors(text, word2vec_model):
     vector_list = []
-    tokens = word2vec.tokenize_to_lower_case(text)
+    tokens = tokenize_to_lower_case(text)
     tokens[:] = filterfalse(token_in_stop_words, tokens)
     for token in tokens:
         word_vector = word2vec_model.wv[token]
@@ -89,10 +118,10 @@ def label_to_class(label):
         return 2
 
 
-data = get_dataset("..\data\dev-Q1-sample.xml", "SemEval2016-Task3-CQA-QL-dev_model",
-                   add_zero_padding=True)
-values = data.relevance.values
-print(values.shape)
+# data = get_dataset("..\data\dev-Q1-sample.xml", "SemEval2016-Task3-CQA-QL-dev_model",
+#                    add_zero_padding=True)
+# values = data.relevance.values
+# print(values.shape)
 
 #
 # print(data.question.values.shape)

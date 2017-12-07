@@ -1,20 +1,17 @@
-from subtask_A.data_set import subtask_A_word2vec_dataset, words
+import dataframe as dataframe
 import numpy as np
 import keras
 from keras.layers import Dense, Dropout
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-import gensim
 
-from subtask_A.dataframe import get_dataset
-from word2vec_model.word2vec_utils import load_word2vec_model
 
 flatten = lambda l: [item for sublist in l for item in sublist]
 
 TRAINING_ITERATIONS = 3
 
 # load data set in word2vec representation
-data_set = get_dataset("..\data\SemEval2016-Task3-CQA-QL-dev.xml", "SemEval2016-Task3-CQA-QL-dev_model",
+data_set = dataframe.get_dataset("..\data\SemEval2016-Task3-CQA-QL-dev.xml", "SemEval2016-Task3-CQA-QL-dev_model",
                        add_zero_padding=True)
 
 # prepare features and labels

@@ -1,8 +1,14 @@
 from basic_stats import load
 import pandas as pd
+import numpy as np
 from itertools import filterfalse
 from stop_words import get_stop_words
 import word2vec_model.word2vec_utils as word2vec
+
+
+GOOD = 0
+POT_USEFUL = 1
+BAD = 2
 
 
 def get_dataset(xml_file, model_name):
@@ -25,8 +31,14 @@ def get_subtask_C_data_from_file(xml_file, model_name):
     for org_question in org_questions:
         rel_comments = org_question("RelComment")
         for rel_comment in rel_comments:
+            comment_text = rel_comment.RelCText.text
+            if comment_text == '':
+                continue
+            comment_word_vector = text_to_word_vectors(comment_text, word2vec_model)
+            if len(comment_word_vector) == 0:
+                continue
+            comments.append(comment_word_vector)
             questions.append(text_to_word_vectors(org_question.OrgQBody.text, word2vec_model))
-            comments.append(text_to_word_vectors(rel_comment.RelCText.text, word2vec_model))
             relevances.append(get_comment_relevance(rel_comment))
     return questions, comments, relevances
 
@@ -37,6 +49,9 @@ def text_to_word_vectors(text, word2vec_model):
     tokens[:] = filterfalse(token_in_stop_words, tokens)
     for token in tokens:
         word_vector = word2vec_model.wv[token]
+        if len(word_vector) == 0:
+            continue
+        word_vector = np.array(word_vector)
         vector_list.append(word_vector)
     return vector_list
 
@@ -51,12 +66,9 @@ def token_in_stop_words(token):
 def get_comment_relevance(rel_comment):
     relevance = rel_comment["RELC_RELEVANCE2ORGQ"]
     if relevance == "Good":
-        return [1, 0, 0]
+        return np.array(GOOD)
     elif relevance == "PotentiallyUseful":
-        return [0, 1, 0]
+        return np.array(POT_USEFUL)
     elif relevance == "Bad":
-        return [0, 0, 1]
+        return np.array(BAD)
 
-
-# data = get_dataset("data\SemEval2016-Task3-CQA-QL-dev.xml", "SemEval2016-Task3-CQA-QL-dev_model")
-# print(data.relevance)

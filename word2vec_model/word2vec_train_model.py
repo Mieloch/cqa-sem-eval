@@ -63,14 +63,13 @@ class Sentences(object):
                         self.tokens_count,
                         float(fp.tell()) / file_size), end='\r')
 
-
                 original_question.clear()
 
 
-def train_model(data_src, model_name, verbose=False):
+def train_model(data_src, model_name, window=5, iterations=10, workers=4, verbose=False):
     sentences = Sentences(data_src, verbose=verbose)
     model = gensim.models.Word2Vec(
-        sentences, min_count=5, window=5, iter=10, size=100, workers=4)
+        sentences, min_count=5, window=window, iter=iterations, size=100, workers=workers)
     model.save(model_name)
 
 
@@ -89,6 +88,22 @@ if __name__ == '__main__':
     parser.add_argument('--verbose',
                         dest='verbose',
                         action='store_true')
+    parser.add_argument('--workers',
+                        dest='workers',
+                        help='How many workers to train w2v model',
+                        default=4,
+                        type=int)
+    parser.add_argument('--iterations',
+                        dest='iterations',
+                        help='How many training iterations',
+                        default=100,
+                        type=int)
+    parser.add_argument('--window',
+                        dest='window',
+                        help='Window size (word2vec)',
+                        default=5,
+                        type=int)
     args = parser.parse_args()
 
-    train_model(args.data, args.model_name, verbose=args.verbose)
+    train_model(args.data, args.model_name, window=args.window,
+                workers=args.workers, iterations=args.iterations, verbose=args.verbose)

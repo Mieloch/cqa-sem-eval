@@ -96,7 +96,7 @@ if __name__ == '__main__':
     parser.add_argument('--iterations',
                         dest='iterations',
                         help='How many training iterations',
-                        default=100,
+                        default=10,
                         type=int)
     parser.add_argument('--window',
                         dest='window',

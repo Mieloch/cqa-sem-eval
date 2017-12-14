@@ -11,13 +11,11 @@ class Sentences(object):
         self.xml_path = xml_path
         self.tokens_count = 0
         self.verbose = verbose
-        self.iterations = 0
 
     def __iter__(self):
         processed_ids = []
         self.tokens_count = 0
 
-        self.iterations += 1
         file_size = os.path.getsize(self.xml_path)
         with open(self.xml_path, mode='rb') as fp:
             for event, original_question in etree.iterparse(fp, tag="OrgQuestion"):
@@ -63,7 +61,6 @@ class Sentences(object):
 
                 if self.verbose:
                     print("Iteration = {}, Tokens = {}, Progress = {}".format(
-                        self.iterations,
                         self.tokens_count,
                         float(fp.tell()) / file_size), end='\r')
 
@@ -91,12 +88,12 @@ def train_models(data_src, workers=4, verbose=False):
 
     for (name, min_count, size, iterations) in models:
         if verbose:
-            print("Running \"{}\" model with min_count={}, iterations={}".format(
-                name, min_count, iterations))
+            print("Running \"{}\" model with min_count={}, iterations={}, size={}".format(
+                name, min_count, iterations, size))
 
         # Create model name
         file_name = os.path.basename(data_src)
-        model_name = "{}--{}.mdl".format(file_name, name)
+        model_name = "models/{}--{}.mdl".format(file_name, name)
 
         # Train model
         model = gensim.models.Word2Vec(

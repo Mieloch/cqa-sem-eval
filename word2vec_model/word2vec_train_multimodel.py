@@ -60,7 +60,7 @@ class Sentences(object):
                     yield tokenize
 
                 if self.verbose:
-                    print("Iteration = {}, Tokens = {}, Progress = {}".format(
+                    print("Tokens = {}, Progress = {}".format(
                         self.tokens_count,
                         float(fp.tell()) / file_size), end='\r')
 

@@ -9,11 +9,13 @@ class Sentences(object):
     def __init__(self, xml_path, verbose=False):
         self.xml_path = xml_path
         self.tokens_count = 0
+        self.iterations = 0
         self.verbose = verbose
 
     def __iter__(self):
         processed_ids = []
         self.tokens_count = 0
+        self.iterations += 1
 
         file_size = os.path.getsize(self.xml_path)
         with open(self.xml_path, mode='rb') as fp:
@@ -59,7 +61,8 @@ class Sentences(object):
                     yield tokenize
 
                 if self.verbose:
-                    print("Tokens = {}, Progress = {}".format(
+                    print("Iteration = {}, Tokens = {}, Progress = {}".format(
+                        self.iterations,
                         self.tokens_count,
                         float(fp.tell()) / file_size), end='\r')
 

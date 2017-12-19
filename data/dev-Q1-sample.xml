@@ -1,0 +1,521 @@
+<xml>
+<OrgQuestion ORGQ_ID="Q268">
+	<OrgQSubject>Good Bank</OrgQSubject>
+	<OrgQBody>Which is a good bank as per your experience in Doha</OrgQBody>
+
+	<Thread THREAD_SEQUENCE="Q268_R4" SubtaskA_Skip_Because_Same_As_RelQuestion_ID="Q246_R15">
+		<RelQuestion RELQ_ID="Q268_R4" RELQ_RANKING_ORDER="4" RELQ_CATEGORY="Advice and Help" RELQ_DATE="2013-05-02 19:43:00" RELQ_USERID="U4882" RELQ_USERNAME="ankukuma" RELQ_RELEVANCE2ORGQ="PerfectMatch">
+			<RelQSubject>Best Bank</RelQSubject>
+			<RelQBody>Hi Guys; I need to open a new bank accoount. Which is the best bank in Qatar ? I assume all of them will roughly be the same; but stll which has a slight edge (Money transfer; benifits etc) Thanks !!!</RelQBody>
+		</RelQuestion>
+
+		<RelComment RELC_ID="Q268_R4_C1" RELC_DATE="2013-05-03 07:23:20" RELC_USERID="U594" RELC_USERNAME="Dilgeer" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Commercial bank/IBQ</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R4_C2" RELC_DATE="2013-05-03 12:58:13" RELC_USERID="U979" RELC_USERNAME="Speedysid" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>The best bank in Qatar for you would be the one that fits in your requirements.I suggest you visit the major banks here; and approach the Customer Relations person there to guide you with the facilities the bank offers. They include: -Current Accounts facilities -Savings Account facilities - Money Transfer (However; I highly recommend using the bank transfer only in emergency cases. There are money transfer agents which offer better exchange rates; and lower service fees) - Tie-ups with any bank in your home country to ease transfers</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R4_C3" RELC_DATE="2013-05-03 12:58:25" RELC_USERID="U979" RELC_USERNAME="Speedysid" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>- Credit / Debit card facilities - Customer Care services - Promotional services - Bank Loans facilities; etc. I recommend that you visit the nearest banks and gather all info.it'll just take you a couple of days to arrive at the decision.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R4_C4" RELC_DATE="2013-05-03 22:25:47" RELC_USERID="U4883" RELC_USERNAME="puru1600" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Commercial Bank</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R4_C5" RELC_DATE="2013-05-04 07:04:50" RELC_USERID="U4884" RELC_USERNAME="usmi" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Any bank other than Doha Bank ;)</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R4_C6" RELC_DATE="2013-05-04 13:02:51" RELC_USERID="U4885" RELC_USERNAME="kiekie212" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>QNB is now strongest bank in the world http://dohanews.co/post/49438355258/bloomberg-qatar-beats-out-singapore-as-home-of-worlds</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R4_C7" RELC_DATE="2013-05-04 13:35:31" RELC_USERID="U4886" RELC_USERNAME="binoyy" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Commercial Bank of Qatar is the best bank in Qatar. Login to the website for more details. http://www.cbq.qa/EN/Personal/Bank-Accounts/Pages/default.aspx</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R4_C8" RELC_DATE="2013-05-04 16:50:50" RELC_USERID="U2" RELC_USERNAME="anonymous" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>Any Islamic bank. Had bad XP w/ CBQ; very bad bank.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R4_C9" RELC_DATE="2013-05-04 17:04:12" RELC_USERID="U2" RELC_USERNAME="anonymous" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>very well said...Any islamic bank..iam with kookie or i second after the comment of kookie...however CBQ is a good bank too :)...any help you want for CBQ bank please PM me :)</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R4_C10" RELC_DATE="2013-05-04 17:27:20" RELC_USERID="U4882" RELC_USERNAME="ankukuma" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>@ Boxbe Well; i am just waiting for my RP and dont wanna waste time in deciding on the bank. From the advice it seems most people are goin with CBQ. Your help will be appreciated. Basically; i want a cheque book ASAP so that i can sign a contract for the </RelCText>
+		</RelComment>
+	</Thread>
+</OrgQuestion>
+
+<OrgQuestion ORGQ_ID="Q268">
+	<OrgQSubject>Good Bank</OrgQSubject>
+	<OrgQBody>Which is a good bank as per your experience in Doha</OrgQBody>
+
+	<Thread THREAD_SEQUENCE="Q268_R5" SubtaskA_Skip_Because_Same_As_RelQuestion_ID="Q246_R13">
+		<RelQuestion RELQ_ID="Q268_R5" RELQ_RANKING_ORDER="5" RELQ_CATEGORY="Advice and Help" RELQ_DATE="2013-12-31 10:19:32" RELQ_USERID="U4880" RELQ_USERNAME="9chimera11" RELQ_RELEVANCE2ORGQ="PerfectMatch">
+			<RelQSubject>What is the best bank to open an account?</RelQSubject>
+			<RelQBody>Seems like all the banks need the salary to be credited to their accounts [where I came from that was not a necessity]. So it sort of limits my choices. Can anyone recommend me a bank that has good interest rates on loans and credit cards? So far I'm considering Doha Bank because of the Lulu card. Is it worth it? :)</RelQBody>
+		</RelQuestion>
+
+		<RelComment RELC_ID="Q268_R5_C1" RELC_DATE="2013-12-31 10:33:24" RELC_USERID="U4328" RELC_USERNAME="Paj" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>IBQ... if your salary is 25k above you will have a banking officer that will take care of your needs...</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R5_C2" RELC_DATE="2013-12-31 10:33:43" RELC_USERID="U3617" RELC_USERNAME="coxtown" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>West bank ????</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R5_C3" RELC_DATE="2013-12-31 10:56:36" RELC_USERID="U102" RELC_USERNAME="BOXBE16DOBARA" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>qatar islamic bank</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R5_C4" RELC_DATE="2013-12-31 11:08:53" RELC_USERID="U492" RELC_USERNAME="happygolucky" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>If your salary is QR35K or more you can opt for QNB with their QNB First facility which allows you to use the airport lounges around the world; a faciltiy which comes in handy when travelling economy class. Also using their Master Card (credit card) gets you miles with Qatar Airways which you can use for travel. And there services in last 5 years of my being a customer has been excellent. (P.S: I dont work for or with QNB).</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R5_C5" RELC_DATE="2013-12-31 11:22:18" RELC_USERID="U3675" RELC_USERNAME="gerarra" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>What about for salary less than 5k?</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R5_C6" RELC_DATE="2013-12-31 11:32:48" RELC_USERID="U1218" RELC_USERNAME="Sulieman" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>Happygolucky;;;; Was a very good marketing; QNB would be happy reading your comment :p</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R5_C7" RELC_DATE="2013-12-31 11:49:27" RELC_USERID="U492" RELC_USERNAME="happygolucky" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>Sulieman..I hope so and then may be I can get even better Service...:)</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R5_C8" RELC_DATE="2013-12-31 11:55:10" RELC_USERID="U3650" RELC_USERNAME="pirate lover" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>DOHA BANK;;;;;;;without any doubt :)</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R5_C9" RELC_DATE="2013-12-31 12:01:21" RELC_USERID="U4881" RELC_USERNAME="Tony Montana123" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>@gerarra If salary is below 5K; go with IBQ</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R5_C10" RELC_DATE="2013-12-31 12:45:35" RELC_USERID="U639" RELC_USERNAME="febamariyam" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>QNB Is best</RelCText>
+		</RelComment>
+	</Thread>
+</OrgQuestion>
+
+<OrgQuestion ORGQ_ID="Q268">
+	<OrgQSubject>Good Bank</OrgQSubject>
+	<OrgQBody>Which is a good bank as per your experience in Doha</OrgQBody>
+
+	<Thread THREAD_SEQUENCE="Q268_R10" SubtaskA_Skip_Because_Same_As_RelQuestion_ID="Q229_R13">
+		<RelQuestion RELQ_ID="Q268_R10" RELQ_RANKING_ORDER="10" RELQ_CATEGORY="Advice and Help" RELQ_DATE="2015-01-02 03:43:21" RELQ_USERID="U4733" RELQ_USERNAME="Caramellatte" RELQ_RELEVANCE2ORGQ="PerfectMatch">
+			<RelQSubject>Which Bank to use in Qatar?</RelQSubject>
+			<RelQBody>Hi Does anyone have recommendations for which bank to use in Qatar? The account will be used to get my salary paid into and transfer funds overseas. Thanks</RelQBody>
+		</RelQuestion>
+
+		<RelComment RELC_ID="Q268_R10_C1" RELC_DATE="2015-01-02 08:40:17" RELC_USERID="U4734" RELC_USERNAME="dohasoccerguy" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>I used to use CBQ when I first got here; but I wasn't happy with the service and products - now I use QNB and its fairly ok. But when it comes to sending money back home; CBQ still offers better exchange rates.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R10_C2" RELC_DATE="2015-01-02 08:42:27" RELC_USERID="U1807" RELC_USERNAME="Equin0x" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Doha Bank Ltd is mostly preferred by the salary class.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R10_C3" RELC_DATE="2015-01-02 08:45:47" RELC_USERID="U65" RELC_USERNAME="Molten Metal" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>No worries bank ... QNB ... Be with the Royals ....................................................</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R10_C4" RELC_DATE="2015-01-02 08:45:52" RELC_USERID="U4735" RELC_USERNAME="cascode" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>CBQ is the better option</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R10_C5" RELC_DATE="2015-01-02 09:52:19" RELC_USERID="U640" RELC_USERNAME="acchabaccha" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>Most of the banks here provide good service to the salaried class and I hardly see much difference among them. You should select a bank where your company has a bank account as it will allow your salary get credited to your account very quickly each month.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R10_C6" RELC_DATE="2015-01-02 09:58:39" RELC_USERID="U4435" RELC_USERNAME="arkb" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>Agree with acchabaccha - go with the same bank as your company. Unless you plan to take out a loan in the near future; then go with the bank that you're most likely to get the best loan offer from.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R10_C7" RELC_DATE="2015-01-02 19:20:35" RELC_USERID="U4736" RELC_USERNAME="afrozmohammed" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>CBQ...</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R10_C8" RELC_DATE="2015-01-03 02:58:08" RELC_USERID="U4733" RELC_USERNAME="Caramellatte" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>Thanks for the feedback guys; will find out which bank my company banks with and go with that</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R10_C9" RELC_DATE="2015-01-03 12:08:36" RELC_USERID="U65" RELC_USERNAME="Molten Metal" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>Good luck ; Caramel ... Super input by Acchabaccha { Acchabaccha means Lovely Baby }.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R10_C10" RELC_DATE="2015-01-08 00:49:33" RELC_USERID="U4733" RELC_USERNAME="Caramellatte" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>lol; thanks</RelCText>
+		</RelComment>
+	</Thread>
+</OrgQuestion>
+
+<OrgQuestion ORGQ_ID="Q268">
+	<OrgQSubject>Good Bank</OrgQSubject>
+	<OrgQBody>Which is a good bank as per your experience in Doha</OrgQBody>
+
+	<Thread THREAD_SEQUENCE="Q268_R13" SubtaskA_Skip_Because_Same_As_RelQuestion_ID="Q246_R76">
+		<RelQuestion RELQ_ID="Q268_R13" RELQ_RANKING_ORDER="13" RELQ_CATEGORY="Moving to Qatar" RELQ_DATE="2007-06-27 15:38:30" RELQ_USERID="U4909" RELQ_USERNAME="msmay" RELQ_RELEVANCE2ORGQ="PerfectMatch">
+			<RelQSubject>Which is the best bank around??</RelQSubject>
+			<RelQBody>Hi everybody; I need to open a bank account as soon as possible. Can you please advise on the best bank to deal with here? Thanks</RelQBody>
+		</RelQuestion>
+
+		<RelComment RELC_ID="Q268_R13_C1" RELC_DATE="2007-06-27 15:44:32" RELC_USERID="U556" RELC_USERNAME="e46M3" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>This really is a subjective matter. Do a search of the forum and you'll come up with lots of results on banks and their services.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R13_C2" RELC_DATE="2007-06-27 16:10:05" RELC_USERID="U210" RELC_USERNAME="DaRuDe" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>is best tellin u from my personal exp. am dealin with them for last 8 years never had any problem. HSBC really got atittude ommercial bank will give you alot but when time comes for pay back they will start suckin ur blood so is with doha bank . :D [img_assist|nid=21285|title=.|desc=|link=none|align=left|width=180|height=180]</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R13_C3" RELC_DATE="2007-06-27 16:11:15" RELC_USERID="U875" RELC_USERNAME="hamlet" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>best international HSBC best local Commerical Bank these are my point of view</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R13_C4" RELC_DATE="2007-06-27 16:24:43" RELC_USERID="U2" RELC_USERNAME="anonymous" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>POSB - Post Office Saving Bank IBSB - International Blood Sucking Bank HSBC - High Society Bullshitting Corporation</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R13_C5" RELC_DATE="2007-06-27 16:53:59" RELC_USERID="U332" RELC_USERNAME="qatexpat" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>LOL !!!</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R13_C6" RELC_DATE="2007-06-27 19:43:41" RELC_USERID="U2303" RELC_USERNAME="Moudir" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>"This topic has been widely covered in many previous threads. Use the search engin to find several forum topics that treated this subject. The bottom line is: there is no such thing as ""best bank"". The concept of Customer service and satisfaction is unknown; they are all sub-standard; procedures and response time: light-years away from western banks. Choose from the names mentioned above; the most convenient for you to use."</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R13_C7" RELC_DATE="2007-06-27 19:59:43" RELC_USERID="U4910" RELC_USERNAME="Israel the humanenemy" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>The one and only best bank is QNB; in my 14 years of experience</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R13_C8" RELC_DATE="2007-06-27 20:05:03" RELC_USERID="U708" RELC_USERNAME="shreeya" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>Any idea about CBQ? [img_assist|nid=22259|title=*|desc=|link=none|align=right|width=135|height=180]</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R13_C9" RELC_DATE="2007-06-27 20:08:39" RELC_USERID="U1137" RELC_USERNAME="Apple" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>avail the lowest interest rate for car loan?</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R13_C10" RELC_DATE="2007-06-27 20:09:21" RELC_USERID="U241" RELC_USERNAME="good girl" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>Well I think it’s a rip off. No such thing as the best bank. I left Doha Bank because of poor customer service and went to QNB which am happy with. With QNB; you have to have a minimum of Qr 3;000 in your current account always. It’s a compulsory savings scheme. Plus; you get .25% in your savings account and if you take out a mortgage loan you pay 8.5%. Be careful; read the small prints. I don't trust banks here.</RelCText>
+		</RelComment>
+	</Thread>
+</OrgQuestion>
+
+<OrgQuestion ORGQ_ID="Q268">
+	<OrgQSubject>Good Bank</OrgQSubject>
+	<OrgQBody>Which is a good bank as per your experience in Doha</OrgQBody>
+
+	<Thread THREAD_SEQUENCE="Q268_R14" SubtaskA_Skip_Because_Same_As_RelQuestion_ID="Q51_R41">
+		<RelQuestion RELQ_ID="Q268_R14" RELQ_RANKING_ORDER="14" RELQ_CATEGORY="Qatar Living Lounge" RELQ_DATE="2012-02-04 10:43:36" RELQ_USERID="U2" RELQ_USERNAME="anonymous" RELQ_RELEVANCE2ORGQ="Relevant">
+			<RelQSubject>Best Credit Card in Doha</RelQSubject>
+			<RelQBody>I would like to apply for a credit card that gives me Points when i spend and not just a simple card that does not get me anything in return for using it... Which card would you recommend gives the most reward for using the card and which card should i stay away from?? (PS I understand that i would either need to shift my salary to the bank or put a deposit of some sort...) thanks!!</RelQBody>
+		</RelQuestion>
+
+		<RelComment RELC_ID="Q268_R14_C1" RELC_DATE="2012-02-04 11:32:23" RELC_USERID="U1828" RELC_USERNAME="francisxjacob" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Lulu Doha Bank Credit Card 1 = 5% 2 = Dream Points</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R14_C2" RELC_DATE="2012-02-04 13:34:20" RELC_USERID="U1829" RELC_USERNAME="redtreble" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>My QNB Card gives me miles/points on Qatar Airways and let's me use their airport lounges too.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R14_C3" RELC_DATE="2012-02-04 14:34:02" RELC_USERID="U1830" RELC_USERNAME="qad421" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Doha Bank Dream Credit Card !!</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R14_C4" RELC_DATE="2012-02-04 15:35:54" RELC_USERID="U273" RELC_USERNAME="ingeniero" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Just don't go for LuLu Doha Bank Card..</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R14_C5" RELC_DATE="2012-02-04 16:01:22" RELC_USERID="U2" RELC_USERNAME="anonymous" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>Why not go for LuLu Doha Bank Card?</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R14_C6" RELC_DATE="2012-02-04 16:19:21" RELC_USERID="U1831" RELC_USERNAME="frenz" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Try any credit card but please do not take IIB car it never works with the machines properly..</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R14_C7" RELC_DATE="2012-02-04 16:32:13" RELC_USERID="U273" RELC_USERNAME="ingeniero" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>Cuz of too many complains from the Customers.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R14_C8" RELC_DATE="2012-02-04 16:39:37" RELC_USERID="U2" RELC_USERNAME="anonymous" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>How about American Express Card?</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R14_C9" RELC_DATE="2012-02-04 17:32:02" RELC_USERID="U1832" RELC_USERNAME="noora06" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>I recommend QNB credit card; you earn Qmiles whenever you use it and so you can redeem awards in Qatarairways privilege club. you can also use the airport lounges.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R14_C10" RELC_DATE="2012-02-04 18:44:42" RELC_USERID="U2" RELC_USERNAME="anonymous" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>I've heard good reviews of Doha Bank CC. I have a platinium CC from CBQ. I used to earn miles with QA but they stopped the same from last year. They still charge me QAR 500 . Customer service tell me to enrol in some wafa points but both the website and contact number of wafa do not work if i wish to enrol. Awesome. QAR 500 bucks for a useless silver card - sorry platinium.</RelCText>
+		</RelComment>
+	</Thread>
+</OrgQuestion>
+
+<OrgQuestion ORGQ_ID="Q268">
+	<OrgQSubject>Good Bank</OrgQSubject>
+	<OrgQBody>Which is a good bank as per your experience in Doha</OrgQBody>
+
+	<Thread THREAD_SEQUENCE="Q268_R16">
+		<RelQuestion RELQ_ID="Q268_R16" RELQ_RANKING_ORDER="16" RELQ_CATEGORY="Moving to Qatar" RELQ_DATE="2013-07-31 02:27:08" RELQ_USERID="U5151" RELQ_USERNAME="shehabi" RELQ_RELEVANCE2ORGQ="Relevant">
+			<RelQSubject>Best Bank.</RelQSubject>
+			<RelQBody>Hi ti all QL's; What bank you are using? and why? Are you using this bank just because it has an affiliate at home? Regards;</RelQBody>
+		</RelQuestion>
+
+		<RelComment RELC_ID="Q268_R16_C1" RELC_DATE="2013-07-31 06:46:39" RELC_USERID="U65" RELC_USERNAME="Molten Metal" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>banks are using us ... Talk to those who had taken a credit card or loan to know more ...</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R16_C2" RELC_DATE="2013-07-31 08:10:53" RELC_USERID="U956" RELC_USERNAME="Rip Cord" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>In Qatar that is like saying which is the best STD.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R16_C3" RELC_DATE="2013-07-31 10:37:03" RELC_USERID="U5152" RELC_USERNAME="arman1arzoo" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>I'm surprised to see such feedbacks on Qatar banks... Is there any serious problem with banks here? Please share if any one had a bad experience before. I'm using commercial bank and till now I'm OK with their services.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R16_C4" RELC_DATE="2013-08-01 11:38:21" RELC_USERID="U5153" RELC_USERNAME="westernindoha" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Well Arman; nothing is wrong here with banks; I feel they are not up to par with UAE bank in terms of service at least not with the best which is abu dhabi islamic bank; but I have made an extensive review of QIB; IBQ; QNB and CBQ. I found out that QNB and CBQ are very dynamic; gives you a lot for cheap. My needs are: -Free Current account with no minimum balance with 2 debit card -Good credit card with airport lounge and added benefit -0% payment plan at good retaillers -Excellent mobile and internet banking -Cheap ATM and transfer for abroad... For the above; QNB and CBQ are the best. But it really depends on your salary too. IBQ is not very good. QIB is ridiculous.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R16_C5" RELC_DATE="2013-08-01 11:45:49" RELC_USERID="U492" RELC_USERNAME="happygolucky" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>With QNB for last 4 years plus...no issues...great service with a smile (mostly) from Qatari's (yeah dont be surprised) and now since they started QNB First it just got even better...:)</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R16_C6" RELC_DATE="2013-08-02 06:38:26" RELC_USERID="U5151" RELC_USERNAME="shehabi" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>WesternInDoha; that's the information that I am looking for and it answer my question. Cheers...</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R16_C7" RELC_DATE="2013-08-02 06:46:37" RELC_USERID="U5151" RELC_USERNAME="shehabi" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>MoltenMetal; it depend how you are looking on the subject matter and the point of view; as the if the glass half empty or half full !!! There are fees for the service; I wish that we don't need banks and you reminded me of old days where we put the gold and the money in bags and bury them in the ground ;) Good Luck..</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R16_C8" RELC_DATE="2013-08-02 06:51:51" RELC_USERID="U5151" RELC_USERNAME="shehabi" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>That's new way of description for the Bank's... I am planing to do the same; let the company deposit the salary in the bank account and I will ignore it for some time ;) Cheers...</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R16_C9" RELC_DATE="2013-08-02 07:10:40" RELC_USERID="U5151" RELC_USERNAME="shehabi" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>I don't know if it is the high competition? or No competition?? Is there any review issued by Central Bank? or any magazine ?? Is there any benchmark based on customer feedback?? When I searched QL there are so many disappointed and negative feedback from from bank clients I don't see the reasons behind it?? Regards;</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R16_C10" RELC_DATE="2013-08-02 12:55:52" RELC_USERID="U5153" RELC_USERNAME="westernindoha" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Sheabi; the reason behind it; is that most people in QL have very low income; hence everytime a bank will take them a penny even a very justified one for a rendered service they will call them robbers...Also bank may not have the same level of service if you earn 2000 or 25000... I would advise you to find a the right branch and the right customer service agent; and stick to him to build a relationship. Because like everywhere you got some lazy people and you want to avoid them.</RelCText>
+		</RelComment>
+	</Thread>
+</OrgQuestion>
+
+<OrgQuestion ORGQ_ID="Q268">
+	<OrgQSubject>Good Bank</OrgQSubject>
+	<OrgQBody>Which is a good bank as per your experience in Doha</OrgQBody>
+
+	<Thread THREAD_SEQUENCE="Q268_R19" SubtaskA_Skip_Because_Same_As_RelQuestion_ID="Q250_R39">
+		<RelQuestion RELQ_ID="Q268_R19" RELQ_RANKING_ORDER="19" RELQ_CATEGORY="Advice and Help" RELQ_DATE="2007-05-06 11:34:28" RELQ_USERID="U4945" RELQ_USERNAME="rabie" RELQ_RELEVANCE2ORGQ="Relevant">
+			<RelQSubject>Islamic Banks in Qatar</RelQSubject>
+			<RelQBody>Any idea about good Islamic banks in Qatar? Services / products wise? Recommendation / experiences Is there any Islamic services @ commercial bank ?</RelQBody>
+		</RelQuestion>
+
+		<RelComment RELC_ID="Q268_R19_C1" RELC_DATE="2007-05-06 12:33:19" RELC_USERID="U13" RELC_USERNAME="irrysa" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>I know Ahli Bank has Islamic branch; QNB; Commercial Bank; even HSBC got Islamic products.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R19_C2" RELC_DATE="2007-05-06 12:34:28" RELC_USERID="U210" RELC_USERNAME="DaRuDe" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>they are the Best :P [img_assist|nid=13339|title=.|desc=|link=none|align=left|width=180|height=180]</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R19_C3" RELC_DATE="2007-05-06 12:57:06" RELC_USERID="U643" RELC_USERNAME="lamea" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>yes QCB does have an islamic banking section by the name of Safa. infact it is an independent branch. they have good saving and long term accounts also.; it is on salwa road i believe. will check and tell you.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R19_C4" RELC_DATE="2007-05-06 13:02:13" RELC_USERID="U1377" RELC_USERNAME="iwael" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>Although they don't have the satisfactory Customer Service level; I will still recommend them as it's pure Islamic Services. I; personally; don't accept the idea of islamic service from a commercial bank.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R19_C5" RELC_DATE="2007-05-06 13:20:07" RELC_USERID="U643" RELC_USERNAME="lamea" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Customer service at Safa was rather good. It is particularly suited to ppl who receive their salary at QCB but want to save the islamic way!easy cash tranfer.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R19_C6" RELC_DATE="2007-05-06 13:24:01" RELC_USERID="U643" RELC_USERNAME="lamea" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>My dads been in banking all his life and thinks its just an eyewash!!! Its just the same commercial banking labelled Islamic!he thinks we are all fools to follow it so blindly! any comments???</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R19_C7" RELC_DATE="2007-05-06 13:29:14" RELC_USERID="U2" RELC_USERNAME="anonymous" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>All what I can tell you that you should not go to International Islamic bank. Not just bad customer service; they are bad at everything</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R19_C8" RELC_DATE="2007-05-06 13:29:43" RELC_USERID="U210" RELC_USERNAME="DaRuDe" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>they will never be accepted banking that way. Some strategic plannings are made and than that approved by the Sharia according to Islamic Laws and than Approved by ministry of Religious afairs. not that u just go make a billboard which says QCB islamic Branch.no never. [img_assist|nid=13339|title=.|desc=|link=none|align=left|width=180|height=180]</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R19_C9" RELC_DATE="2007-05-06 15:06:18" RELC_USERID="U4946" RELC_USERNAME="alexandre_quemada" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>Hi Lamea! im kinda new in here but what I know about islamic banking is that they got much lower rates and a certain portion is donated to their Muslim Communities who need help - gotta think from the more positive angle since we are living in their world we gotta live by it. Otherwise go to America or Europe instead but for me Islam and Islamic banking is good. Just a thought. No offense meant ok? Cheers! PETER GERARD ALEXANDER QUEMADA (ALEX) CALL ME +974-551-6542 FRIENDSTER ME: alexandre_quemada@yahoo.com</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R19_C10" RELC_DATE="2007-05-06 15:08:31" RELC_USERID="U210" RELC_USERNAME="DaRuDe" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Ask me Man they Suck Wana know Why Will give you One of Officers Number how he is handling our billions. DOHA BANK SUCKS :S Be it Islamic Or In General. [img_assist|nid=13339|title=.|desc=|link=none|align=left|width=180|height=180]</RelCText>
+		</RelComment>
+	</Thread>
+</OrgQuestion>
+
+<OrgQuestion ORGQ_ID="Q268">
+	<OrgQSubject>Good Bank</OrgQSubject>
+	<OrgQBody>Which is a good bank as per your experience in Doha</OrgQBody>
+
+	<Thread THREAD_SEQUENCE="Q268_R27" SubtaskA_Skip_Because_Same_As_RelQuestion_ID="Q6_R2">
+		<RelQuestion RELQ_ID="Q268_R27" RELQ_RANKING_ORDER="27" RELQ_CATEGORY="Moving to Qatar" RELQ_DATE="2012-09-25 15:36:57" RELQ_USERID="U267" RELQ_USERNAME="nemesis01" RELQ_RELEVANCE2ORGQ="Irrelevant">
+			<RelQSubject>PERSONAL LOAN AND WORK TERMINATION</RelQSubject>
+			<RelQBody>I am currently working here in Qatar; our employer informed us that they will transfer to contractor with less salary; but we have option not to accept; but the problem is I have Personal Loan in one of the BAnk here in DOHA; what if I will not accept the offer; what will happen to me ; I mean did the BAnk will force to pay or not?</RelQBody>
+		</RelQuestion>
+
+		<RelComment RELC_ID="Q268_R27_C1" RELC_DATE="2012-09-25 15:38:06" RELC_USERID="U268" RELC_USERNAME="britexpat" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>Haha.. so you want to get away without paying the loan ?</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R27_C2" RELC_DATE="2012-09-25 15:39:02" RELC_USERID="U267" RELC_USERNAME="nemesis01" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>NOt really; but Iam Just curious what if the Company is the cause of termination?</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R27_C3" RELC_DATE="2012-09-25 15:42:03" RELC_USERID="U268" RELC_USERNAME="britexpat" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>Yes; but your loan and contract is with the bank.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R27_C4" RELC_DATE="2012-09-25 15:45:19" RELC_USERID="U267" RELC_USERNAME="nemesis01" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>You mean even the cause of termination is The Company; the bank will force me to pay??and wat if I find new job with less salary war will happen did they reduce my Monthly fees?</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R27_C5" RELC_DATE="2012-09-25 15:47:09" RELC_USERID="U268" RELC_USERNAME="britexpat" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="PotentiallyUseful">
+			<RelCText>I am sure you can renegotiate the repayments with the bank..</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R27_C6" RELC_DATE="2012-09-25 15:49:35" RELC_USERID="U267" RELC_USERNAME="nemesis01" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>AH okay; because I am just worried; but not paying and run from my debts is not my option; I do believed in KARMA...thanks for the Info.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R27_C7" RELC_DATE="2012-09-25 15:50:09" RELC_USERID="U268" RELC_USERNAME="britexpat" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>You're welcome. I hope it all works out for you.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R27_C8" RELC_DATE="2012-09-25 16:02:59" RELC_USERID="U65" RELC_USERNAME="Molten Metal" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Fact : If your company terminates you; take that letter to your bank ; you won't be required to pay any remaining amount ; bank will use its tacts ; don't yield ; after few days of delay ; finally you will get clearance from bank and fly home .. Insurer of your money / bank would pay that amount to bank; may be insurer and bank are having offices in the same building / or managers are cousins / they are after your money / so escape clear from both parties / Pray hard / Good luck in finding another job soon somewhere / Regards.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R27_C9" RELC_DATE="2012-09-25 16:07:08" RELC_USERID="U65" RELC_USERNAME="Molten Metal" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>Would you believe if I say 1000s had left without repaying a single coin in case your company terminates you .. what for you pay premium every month my friend ..</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R27_C10" RELC_DATE="2012-09-25 16:10:23" RELC_USERID="U268" RELC_USERNAME="britexpat" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>This is interesting. I did not know this. To be honest; I am surprised that this is possible; but good for those who have bank loans.</RelCText>
+		</RelComment>
+	</Thread>
+</OrgQuestion>
+
+<OrgQuestion ORGQ_ID="Q268">
+	<OrgQSubject>Good Bank</OrgQSubject>
+	<OrgQBody>Which is a good bank as per your experience in Doha</OrgQBody>
+
+	<Thread THREAD_SEQUENCE="Q268_R29" SubtaskA_Skip_Because_Same_As_RelQuestion_ID="Q250_R53">
+		<RelQuestion RELQ_ID="Q268_R29" RELQ_RANKING_ORDER="29" RELQ_CATEGORY="Moving to Qatar" RELQ_DATE="2008-05-09 23:20:40" RELQ_USERID="U2" RELQ_USERNAME="anonymous" RELQ_RELEVANCE2ORGQ="PerfectMatch">
+			<RelQSubject>Best bank in Qatar?</RelQSubject>
+			<RelQBody>Greetings everybody. I will like to see if someone can help me; I want to know which is the best bank in Qatar for opening a personal bank account. Best regards. Have a nice weekend everyone.</RelQBody>
+		</RelQuestion>
+
+		<RelComment RELC_ID="Q268_R29_C1" RELC_DATE="2008-05-09 23:24:22" RELC_USERID="U485" RELC_USERNAME="casanova" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>HSBC.... “Our scientific power has outrun our spiritual power. We have guided missiles and misguided men.” Martin Luther King.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R29_C2" RELC_DATE="2008-05-09 23:28:03" RELC_USERID="U2" RELC_USERNAME="anonymous" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>"Thanks casanova; I allready got a bank account with HSBC in London. Best regards. ""If you`re dreaming a love story let tears tell us about it"""</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R29_C3" RELC_DATE="2008-05-09 23:31:25" RELC_USERID="U485" RELC_USERNAME="casanova" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>Even i have one back home... really ...worlds local bank.. “Our scientific power has outrun our spiritual power. We have guided missiles and misguided men.” Martin Luther King.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R29_C4" RELC_DATE="2008-05-09 23:37:36" RELC_USERID="U13" RELC_USERNAME="irrysa" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>but i have heard they'd open u account only if u want to make a salary transfer... GK; u have see what exactly u want from ur bank; what's ue requirements and what's important to u? the min balance? branch near ur house? good internet/phone banking? product range (apart from standard debit and credit card stuff)? interest rate on ur savings and deposits? investment products? best customer service? nobody can really give u a proper answer if u will come and ask which bank is the best in here :o) If you're looking for a problem; you're probably gonna find one.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R29_C5" RELC_DATE="2008-05-09 23:40:30" RELC_USERID="U2" RELC_USERNAME="anonymous" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>"Greetings irrysa; well you are right; that`s true. ""If you`re dreaming a love story let tears tell us about it"""</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R29_C6" RELC_DATE="2008-05-09 23:51:46" RELC_USERID="U4951" RELC_USERNAME="maxboy" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Well Doha Bank; i would recommend as the best bank for opening a savings account. they hold lucky weekly; monthly and yearly draws on savings account and you never know; you will become a millionare on day. apart from this; i think they offer a lot of e-services which will help you manage and operate your account the way you want. www.dohabank.com.qa regards;</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R29_C7" RELC_DATE="2008-05-10 00:15:59" RELC_USERID="U2166" RELC_USERNAME="midniteboy" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>the best bank in qatar is cbq (Commercial Bank Qatar) coz very quick service very comfortable alot of branch in all over qatar and gulf the main think i observed that they r very honest in their duties i love cbq since 8years i am there customer</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R29_C8" RELC_DATE="2008-05-10 01:35:56" RELC_USERID="U2" RELC_USERNAME="anonymous" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>"Ok; thanks everybody that was very kind from all of you. Best regards. Nice weekend ! ""If you`re dreaming a love story let tears tell us about it"""</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R29_C9" RELC_DATE="2008-05-10 02:17:04" RELC_USERID="U2163" RELC_USERNAME="The rock" RELC_RELEVANCE2ORGQ="Bad" RELC_RELEVANCE2RELQ="Bad">
+			<RelCText>Good to read the positive comments about most banks. Sort of revives my confidence in the banks here. I went to one and talked to the 'customer relationship officer' about opening an account and to each one of my question; he had to guess an answer :) any how; i guess only experience will tell. ------------------------------------------ Quidquid latine dictum sit; altum sonatur.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R29_C10" RELC_DATE="2008-05-10 04:02:28" RELC_USERID="U2466" RELC_USERNAME="oabazeed" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Hi Casanova; I'm sorry to disappoint you with this; HSBC is just like any other bank in Doha; and it's even worse because they charge for every thing. Don't be amused by this word (The World's Local Bank); they are right in it's local; but it's not universal. you can ask them about something to do with another HSBC world wide; they will tell you: sorry; there is no networks between our banks in the world; so it's just local bank. I'm telling you this; since I'm dealing with five different bank in Qatar; and HSBC was even lower level than others; it's just a big name; the only good thing about them; that they provide you parking in the main branch in Banks street. I think Doha; Almashreq; and the commercial banks are better options. Best regards</RelCText>
+		</RelComment>
+	</Thread>
+</OrgQuestion>
+
+<OrgQuestion ORGQ_ID="Q268">
+	<OrgQSubject>Good Bank</OrgQSubject>
+	<OrgQBody>Which is a good bank as per your experience in Doha</OrgQBody>
+
+	<Thread THREAD_SEQUENCE="Q268_R31" SubtaskA_Skip_Because_Same_As_RelQuestion_ID="Q246_R54">
+		<RelQuestion RELQ_ID="Q268_R31" RELQ_RANKING_ORDER="31" RELQ_CATEGORY="Investment and Finance" RELQ_DATE="2011-08-18 00:08:35" RELQ_USERID="U1111" RELQ_USERNAME="lraep_elehcim86" RELQ_RELEVANCE2ORGQ="Relevant">
+			<RelQSubject>what is the best bank to open a savings account in doha?</RelQSubject>
+			<RelQBody></RelQBody>
+		</RelQuestion>
+
+		<RelComment RELC_ID="Q268_R31_C1" RELC_DATE="2011-08-18 00:42:16" RELC_USERID="U4904" RELC_USERNAME="uduman" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>doha BANK FOR LOCALLY HSBC FO R INTERNATIONALLY</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R31_C2" RELC_DATE="2011-08-18 03:55:18" RELC_USERID="U3927" RELC_USERNAME="huzaifa.akram" RELC_RELEVANCE2ORGQ="PotentiallyUseful" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>''DOHA BANK'' IS HAVING AL DANA SAVING SCHEME THAT IS VERY GOOD....</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R31_C3" RELC_DATE="2011-08-18 07:14:45" RELC_USERID="U4905" RELC_USERNAME="formula_1" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>For me it's Doha Bank.</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R31_C4" RELC_DATE="2011-08-18 08:19:43" RELC_USERID="U4906" RELC_USERNAME="UTEP" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>FOE ME CBQ</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R31_C5" RELC_DATE="2011-08-18 08:19:54" RELC_USERID="U4906" RELC_USERNAME="UTEP" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>FOE ME CBQ</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R31_C6" RELC_DATE="2011-08-18 08:20:01" RELC_USERID="U4906" RELC_USERNAME="UTEP" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>FOE ME CBQ</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R31_C7" RELC_DATE="2011-08-18 08:47:00" RELC_USERID="U2" RELC_USERNAME="anonymous" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>In my experience DOHA BANK is the best one working in Qatar. They are giving importance to the customers and giving more promotions. Now DOHA BANK &amp; Lulu hyper market started a new scheme of purchase card; it will you 10% discount on our purchase from any Lulu ... I think its nice.....</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R31_C8" RELC_DATE="2011-08-18 09:20:48" RELC_USERID="U2" RELC_USERNAME="anonymous" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>Doha - Bank &amp; QNB</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R31_C9" RELC_DATE="2011-08-18 12:02:46" RELC_USERID="U4907" RELC_USERNAME="vairavanathan" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>for me Doha Bank is Best</RelCText>
+		</RelComment>
+
+		<RelComment RELC_ID="Q268_R31_C10" RELC_DATE="2011-08-18 14:26:58" RELC_USERID="U4908" RELC_USERNAME="maria issa" RELC_RELEVANCE2ORGQ="Good" RELC_RELEVANCE2RELQ="Good">
+			<RelCText>commercial bank is the best i work there and the system is great and if youhave trouble the service is quick!!</RelCText>
+		</RelComment>
+	</Thread>
+</OrgQuestion>
+</xml>

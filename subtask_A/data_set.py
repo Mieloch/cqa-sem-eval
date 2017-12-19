@@ -4,6 +4,30 @@ import word2vec_model.word2vec_utils as word2vec
 import gensim
 
 
+def words(xml_file, word2vec_model):
+    print("Loading word2vec data set")
+    data_set = subtask_A_raw_dataset(xml_file)
+    result = []
+    for sample in data_set:
+        question_vectors = word2vec.sentence2vector_list(sample["question"], word2vec_model, exclude_stopwords=True,
+                                                         to_lower_case=True)
+        comment_vectors = word2vec.sentence2vector_list(sample["comment"], word2vec_model, to_lower_case=True,
+                                                        exclude_stopwords=True)
+
+        if len(question_vectors) == 0 or len(comment_vectors) == 0:
+            continue
+
+        transformed_sample = dict([
+            ("question", question_vectors),
+            ("comment", comment_vectors),
+            ("relevance", label_to_class(sample["relevance"]))])
+        result.append(transformed_sample)
+
+    print("Loading word2vec data set [DONE]")
+
+    return result
+
+
 def subtask_A_word2vec_dataset(xml_file, word2vec_model):
     print("Loading word2vec data set")
     data_set = subtask_A_raw_dataset(xml_file)

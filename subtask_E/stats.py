@@ -228,6 +228,7 @@ if __name__ == '__main__':
                         default='../word2vec_model/subtask-e-word-model')
     parser.add_argument('--skip', dest='skip', help='Word2Vec model file',
                         type=int, default=0)
+    parser.add_argument('--verbose', default=False, action='store_true')
 
     args = parser.parse_args()
     stats(args.data,
@@ -235,4 +236,4 @@ if __name__ == '__main__':
           model_path=args.model,
           append=args.skip > 0,
           skip=args.skip,
-          verbose=False)
+          verbose=args.verbose)

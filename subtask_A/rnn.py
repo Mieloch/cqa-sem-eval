@@ -7,11 +7,11 @@ import matplotlib.pyplot as plt
 import gensim
 from word2vec_model.word2vec_utils import load_word2vec_model
 
-TRAINING_ITERATIONS = 50
+TRAINING_ITERATIONS = 5
 
 # load data set in word2vec representation
-data_set = subtask_A_word2vec_dataset("../data/SemEval2016-Task3-CQA-QL-train-part1.xml",
-                                      load_word2vec_model("GoogleNews-vectors-negative300.bin"))
+data_set = subtask_A_word2vec_dataset("../data/SemEval2016-Task3-CQA-QL-dev.xml",
+                                      load_word2vec_model("SemEval2016-Task3-CQA-QL-dev_model"))
 
 # prepare features and labels
 X = []
@@ -30,17 +30,20 @@ Y = keras.utils.to_categorical(Y, num_classes=3)
 # split into test and train sets
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
 
+X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
+X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
+
 # define nn model
 model = keras.Sequential()
-model.add(Dense(128, activation="elu", kernel_initializer=keras.initializers.he_normal(), input_dim=INPUT_DIM))
+model.add(keras.layers.SimpleRNN(128, activation=keras.layers.advanced_activations.LeakyReLU(), input_shape=(INPUT_DIM, 1)))
+model.add(keras.layers.BatchNormalization())
 model.add(Dropout(0.5))
 model.add(Dense(128, activation="elu", kernel_initializer=keras.initializers.he_normal()))
 model.add(Dropout(0.5))
 model.add(Dense(64, activation="elu", kernel_initializer=keras.initializers.he_normal()))
-model.add(Dropout(0.5))
 model.add(Dense(3, activation="softmax"))
 
-model.compile(optimizer=keras.optimizers.SGD(lr=0.01, momentum=0.0, decay=0.0, nesterov=False),
+model.compile(optimizer=keras.optimizers.SGD(lr=0.02, momentum=0.0, decay=0.0, nesterov=False),
               loss="categorical_crossentropy",
               metrics=['accuracy'])
 

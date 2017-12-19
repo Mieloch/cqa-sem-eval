@@ -58,5 +58,5 @@ def get_comment_relevance(rel_comment):
         return [0, 0, 1]
 
 
-data = get_dataset("data\SemEval2016-Task3-CQA-QL-dev.xml", "SemEval2016-Task3-CQA-QL-dev_model")
-print(data.relevance)
+# data = get_dataset("data\SemEval2016-Task3-CQA-QL-dev.xml", "SemEval2016-Task3-CQA-QL-dev_model")
+# print(data.relevance)

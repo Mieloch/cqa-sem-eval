@@ -32,6 +32,25 @@ def tokenize_to_lower_case(sentence):
     return [t.lower() for t in tokenize]
 
 
+def sentence2vector_list(sentence, word2vec_model, to_lower_case=False, exclude_stopwords=False):
+    stop_words = get_stop_words('en')
+    vectors = []
+    sentence_tokens = nltk.word_tokenize(sentence)
+
+    for sentence_token in sentence_tokens:
+        if to_lower_case == True:
+            sentence_token = sentence_token.lower()
+        if exclude_stopwords == True:
+            if sentence_token in stop_words:
+                continue
+        try:
+            vectors.append(word2vec_model.wv[sentence_token])
+        except Exception as E:
+            print(E)
+            continue
+    return vectors
+
+
 def sentence2vectors(sentence, word2vec_model, to_lower_case=False, exclude_stopwords=False):
     stop_words = get_stop_words('en')
     vectors_by_tokens = {}

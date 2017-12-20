@@ -42,7 +42,7 @@ class Questions(object):
         self.append = append
         self.skip = skip
         self.iteration = 0
-        pass
+        self.file_progress = 0.0
 
     def related_question(self, original_question, model):
         original_question_body = original_question.findtext("OrgQBody")
@@ -160,6 +160,11 @@ class Questions(object):
 
         return comments
 
+    def iterator_cleanup(self, element):
+        element.clear()
+
+        while element.getprevious() is not None:
+            del element.getparent()[0]
 
     def __iter__(self):
         model = spacy.load("en")
@@ -167,10 +172,10 @@ class Questions(object):
         with open(self.xml_path, 'rb') as fp:
             for i, (event, original_question) in enumerate(etree.iterparse(fp, tag="OrgQuestion")):
                 if self.skip > i:
+                    self.iterator_cleanup(original_question)
                     continue
 
                 self.iteration = i
-                original_question_body = original_question.findtext("OrgQBody")
 
                 # There's always one related question
                 yield self.related_question(original_question, model)
@@ -178,12 +183,15 @@ class Questions(object):
                 for answer_row in self.related_answers(original_question, model):
                     yield answer_row
 
-                for comment_row in self.related_comments(original_question, model):
-                    yield comment_row
+                # for comment_row in self.related_comments(original_question, model):
+                #     yield comment_row
 
                 if self.verbose:
-                    progress = float(fp.tell() / file_size) * 100.0
-                    print("Iteration = {}, File progress = {:2.2f}%".format(i, progress), end="\r")
+                    self.progress = float(fp.tell() / file_size) * 100.0
+                    print("Iteration = {}, File progress = {:2.2f}%".format(
+                        i, self.progress), end="\r")
+
+                self.iterator_cleanup(original_question)
 
 
 def stats(src, dest='Duplicate-Question-stats.csv', model_path='../word2vec_model/subtask-e-word-model', append=False, skip=0, verbose=False):
@@ -200,7 +208,8 @@ def stats(src, dest='Duplicate-Question-stats.csv', model_path='../word2vec_mode
     file_mode = 'a' if append else 'w'
     with open(dest, file_mode) as csvfile:
         fieldnames = [ORIGINAL_QUESTION_ID, TYPE, RELATED_ID, JACCARD_DISTANCE,
-                      LENGTH_DIFFERENCE, COSINE_SIMILARITY, BIGRAM_SIMILARITY, W2V_COSINE_SIMILARITY, RELEVANCE]
+                      LENGTH_DIFFERENCE, COSINE_SIMILARITY, BIGRAM_SIMILARITY,
+                      W2V_COSINE_SIMILARITY, RELEVANCE]
         writer = csv.DictWriter(
             csvfile, fieldnames=fieldnames, lineterminator='\n')
 
@@ -209,23 +218,29 @@ def stats(src, dest='Duplicate-Question-stats.csv', model_path='../word2vec_mode
 
         questions_iterator = Questions(
             src, word2vec_model, append=append, skip=skip, verbose=verbose)
-        for row in questions_iterator:
-            writer.writerow(row)
+        try:
+            for row in questions_iterator:
+                writer.writerow(row)
 
-            if sig_term_killer.kill:
-                kill_program(dest, questions_iterator.iteration)
-
+                if sig_term_killer.kill:
+                    kill_program(dest, questions_iterator.iteration)
+        except error:
+            print(error)
+            # Save last iteration number and file progress in .txt file
+            with open('last-stats.txt', 'w') as fp:
+                fp.write('LastIteration={}'.format(questions_iterator.iteration))
+                fp.write('Progress={}'.format(questions_iterator.progress))
 
 if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--data', dest='data', help='Data file',
-                        default='../data/subtask_e_sample.xml')
+                        default='/Volumes/DataDrive/stackexchange_train_v1_2/stackexchange_english_train_v1_2/stackexchange_english_train.xml')
     parser.add_argument('--output', dest='output', help='Output stats .csv file',
-                        default='Duplicate-Question-stats.csv')
+                        default='../Duplicate-Question-stats.csv')
     parser.add_argument('--model', dest='model', help='Word2Vec model file',
-                        default='../word2vec_model/subtask-e-word-model')
+                        default='/Volumes/DataDrive/models/stackexchange_english_devel.xml--it50-mc5-s200.mdl')
     parser.add_argument('--skip', dest='skip', help='Word2Vec model file',
                         type=int, default=0)
     parser.add_argument('--verbose', default=False, action='store_true')

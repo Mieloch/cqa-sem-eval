@@ -11,6 +11,7 @@ from lxml import etree
 from os import path
 
 ORIGINAL_QUESTION_ID = "question_id"
+TYPE = 'type'
 RELATED_ID = "related_id"
 RELEVANCE = "relevance"
 LENGTH_DIFFERENCE = "length_difference"
@@ -18,11 +19,25 @@ JACCARD_DISTANCE = "jaccard_distance"
 COSINE_SIMILARITY = "cosine_similarity"
 BIGRAM_SIMILARITY = "bigram_similarity"
 W2V_COSINE_SIMILARITY = "w2v_cosine_similarity"
-TYPE='type'
+CATEGORY = "category"
+IS_ACCEPTED = "is_accepted"
+SCORE = "score"
+USER_ID = "user_id"
+TAGS = "tags"
+VIEW_COUNT = "view_count"
 
 def kill_program(output_file, iteration_num):
     print("Program stopped at {} file, {} iteration".format(output_file, iteration_num))
     exit()
+
+
+def set_default_row_values(row):
+    specific_keys = [CATEGORY, IS_ACCEPTED, SCORE, USER_ID, TAGS, VIEW_COUNT, RELEVANCE]
+
+    for key in specific_keys:
+        if row[key] is None:
+            row[key] = "n/a"
+
 
 class SigTermKiller:
     def __init__(self):
@@ -42,7 +57,7 @@ class Questions(object):
         self.append = append
         self.skip = skip
         self.iteration = 0
-        self.file_progress = 0.0
+        self.progress = 0.0
 
     def related_question(self, original_question, model):
         original_question_body = original_question.findtext("OrgQBody")
@@ -52,7 +67,15 @@ class Questions(object):
         row = {}
         row[ORIGINAL_QUESTION_ID] = original_question.get('ORGQ_ID')
         row[TYPE] = 'RELQ'
+
         row[RELATED_ID] = related_question.get('RELQ_ID')
+        row[CATEGORY] = related_question.get('RELQ_CATEGORY')
+        row[SCORE] = related_question.get('RELQ_SCORE')
+        row[TAGS] = related_question.get('RELQ_TAGS')
+        row[VIEW_COUNT] = related_question.get('RELQ_VIEWCOUNT')
+        row[USER_ID] = related_question.get('RELQ_USERID')
+        row[RELEVANCE] = related_question.get('RELQ_RELEVANCE2ORGQ')
+
         row[JACCARD_DISTANCE] = round(basic_stats.jaccard_distance(
             original_question_body, related_question_body), 3)
         row[LENGTH_DIFFERENCE] = basic_stats.length_difference(
@@ -77,7 +100,6 @@ class Questions(object):
             row[W2V_COSINE_SIMILARITY] = word2vec_utils.vectors_cosine_similarity(original_question_vector,
                                                                                   related_question_vector)
 
-        row[RELEVANCE] = related_question.get('RELQ_RELEVANCE2ORGQ')
         return row
 
     def related_answers(self, original_question, model):
@@ -91,7 +113,12 @@ class Questions(object):
             row = {}
             row[ORIGINAL_QUESTION_ID] = original_question.get('ORGQ_ID')
             row[TYPE] = 'RELA'
+
             row[RELATED_ID] = related_answer.get('RELA_ID')
+            row[SCORE] = related_answer.get('RELA_SCORE')
+            row[IS_ACCEPTED] = related_answer.get('RELA_ACCEPTED')
+            row[USER_ID] = related_answer.get('RELA_USERID')
+
             row[JACCARD_DISTANCE] = round(basic_stats.jaccard_distance(
                 original_question_body, related_answer_body), 3)
             row[LENGTH_DIFFERENCE] = basic_stats.length_difference(
@@ -183,9 +210,6 @@ class Questions(object):
                 for answer_row in self.related_answers(original_question, model):
                     yield answer_row
 
-                # for comment_row in self.related_comments(original_question, model):
-                #     yield comment_row
-
                 if self.verbose:
                     self.progress = float(fp.tell() / file_size) * 100.0
                     print("Iteration = {}, File progress = {:2.2f}%".format(
@@ -209,9 +233,10 @@ def stats(src, dest='Duplicate-Question-stats.csv', model_path='../word2vec_mode
     with open(dest, file_mode) as csvfile:
         fieldnames = [ORIGINAL_QUESTION_ID, TYPE, RELATED_ID, JACCARD_DISTANCE,
                       LENGTH_DIFFERENCE, COSINE_SIMILARITY, BIGRAM_SIMILARITY,
-                      W2V_COSINE_SIMILARITY, RELEVANCE]
+                      W2V_COSINE_SIMILARITY, CATEGORY, IS_ACCEPTED, SCORE, USER_ID,
+                      TAGS, VIEW_COUNT, RELEVANCE]
         writer = csv.DictWriter(
-            csvfile, fieldnames=fieldnames, lineterminator='\n')
+            csvfile, fieldnames=fieldnames, delimiter=';', lineterminator='\n')
 
         if not append:
             writer.writeheader()
@@ -220,11 +245,12 @@ def stats(src, dest='Duplicate-Question-stats.csv', model_path='../word2vec_mode
             src, word2vec_model, append=append, skip=skip, verbose=verbose)
         try:
             for row in questions_iterator:
+                set_default_row_values(row)
                 writer.writerow(row)
 
                 if sig_term_killer.kill:
                     kill_program(dest, questions_iterator.iteration)
-        except error:
+        except Exception as error:
             print(error)
             # Save last iteration number and file progress in .txt file
             with open('last-stats.txt', 'w') as fp:

@@ -16,9 +16,9 @@ def main(verbose):
     ]
 
     model_files = [
-        # '/Volumes/DataDrive/models/GoogleNews-vectors-negative300.bin',
-        model_files_dir + '/stackexchange_english_devel.xml--it50-mc5-s200.mdl',
-        model_files_dir + '/stackexchange_english_devel.xml--it50-mc5-s100.mdl',
+        '/Volumes/DataDrive/models/GoogleNews-vectors-negative300.bin',
+        # model_files_dir + '/stackexchange_english_devel.xml--it50-mc5-s200.mdl',
+        # model_files_dir + '/stackexchange_english_devel.xml--it50-mc5-s100.mdl',
         # model_files_dir + '/stackexchange_english_devel.xml--it10-mc5-s100.mdl',
         # model_files_dir + '/stackexchange_english_devel.xml--it30-mc5-s100.mdl',
         # model_files_dir + '/stackexchange_english_devel.xml--it10-mc10-s100.mdl',

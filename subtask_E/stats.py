@@ -144,7 +144,7 @@ def stats(src, dest='Duplicate-Question-stats.csv', model_path='../word2vec_mode
     if verbose:
         print("Loading word2vec model located at {}...".format(model_path))
 
-    word2vec_model = gensim.models.Word2Vec.load(model_path)
+    word2vec_model = gensim.models.KeyedVectors.load_word2vec_format(model_path, binary=True)
 
     if verbose:
         print("word2vec model loaded.")

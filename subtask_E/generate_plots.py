@@ -39,8 +39,10 @@ def create_plot(stats_path, title=None):
 def generate_plots():
     df_paths = {'en_dev_100': '/Volumes/DataDrive/stats/stackexchange_english_devel.xml--stackexchange_english_devel.xml--it50-mc5-s100.mdl.csv',
                 'en_dev_200': '/Volumes/DataDrive/stats/stackexchange_english_devel.xml--stackexchange_english_devel.xml--it50-mc5-s200.mdl.csv',
+                'en_dev_gn': '/Volumes/DataDrive/stats/stackexchange_english_devel.xml--GoogleNews-vectors-negative300.bin.csv',
                 'en_train_100': '/Volumes/DataDrive/stats/stackexchange_english_train.xml--stackexchange_english_devel.xml--it50-mc5-s100.mdl.csv',
-                'en_train_200': '/Volumes/DataDrive/stats/stackexchange_english_train.xml--stackexchange_english_devel.xml--it50-mc5-s200.mdl.csv'}
+                'en_train_200': '/Volumes/DataDrive/stats/stackexchange_english_train.xml--stackexchange_english_devel.xml--it50-mc5-s200.mdl.csv',
+                'en_train_gn': '/Volumes/DataDrive/stats/stackexchange_english_train.xml--GoogleNews-vectors-negative300.bin.csv'}
 
     for title, path in df_paths.items():
         create_plot(path, title=title)

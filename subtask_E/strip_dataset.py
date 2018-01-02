@@ -8,7 +8,7 @@ ORG_QUESTION_ID = 'original_question_id'
 REL_QUESTION_ID = 'related_question_id'
 ORG_QUESTION_TEXT = 'original_question_text'
 REL_QUESTION_TEXT = 'related_question_text'
-
+RELEVANCE = 'relevance'
 
 class DatasetIterator(object):
     def __init__(self, fp):
@@ -29,17 +29,20 @@ class DatasetIterator(object):
             related_question_id = related_question.get('RELQ_ID')
             related_question_text = related_question.findtext('RelQBody')
 
+            relevance = related_question.get('RELQ_RELEVANCE2ORGQ')
+
             yield { ORG_QUESTION_ID: original_question_id,
                     REL_QUESTION_ID: related_question_id,
                     ORG_QUESTION_TEXT: original_question_text,
-                    REL_QUESTION_TEXT: related_question_text }
+                    REL_QUESTION_TEXT: related_question_text,
+                    RELEVANCE: relevance }
 
             self._iter_cleanup(original_question)
 
 
 def strip_dataset(xml_path, output, verbose):
     fieldnames = [ORG_QUESTION_ID, REL_QUESTION_ID,
-                  ORG_QUESTION_TEXT, REL_QUESTION_TEXT]
+                  ORG_QUESTION_TEXT, REL_QUESTION_TEXT, RELEVANCE]
 
     with open(output, 'w') as csv_fp:
         writer = DictWriter(csv_fp, fieldnames=fieldnames, lineterminator='\n')

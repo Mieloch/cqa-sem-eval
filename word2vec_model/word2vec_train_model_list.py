@@ -9,13 +9,11 @@ class Sentences(object):
     def __init__(self, xml_path, verbose=False):
         self.xml_path = xml_path
         self.tokens_count = 0
-        self.iterations = 0
         self.verbose = verbose
 
     def __iter__(self):
         processed_ids = []
         self.tokens_count = 0
-        self.iterations += 1
 
         file_size = os.path.getsize(self.xml_path)
         with open(self.xml_path, mode='rb') as fp:
@@ -61,8 +59,7 @@ class Sentences(object):
                     yield tokenize
 
                 if self.verbose:
-                    print("Iteration = {}, Tokens = {}, Progress = {}".format(
-                        self.iterations,
+                    print("Tokens = {}, Progress = {}".format(
                         self.tokens_count,
                         float(fp.tell()) / file_size), end='\r')
 
@@ -70,7 +67,7 @@ class Sentences(object):
 
 
 def train_model(data_src, model_name, window=5, iterations=10, workers=4, verbose=False):
-    sentences = Sentences(data_src, verbose=verbose)
+    sentences = list(Sentences(data_src, verbose=verbose))
     model = gensim.models.Word2Vec(
         sentences, min_count=5, window=window, iter=iterations, size=100, workers=workers)
     model.save(model_name)

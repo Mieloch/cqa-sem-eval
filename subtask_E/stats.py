@@ -65,12 +65,13 @@ class Questions(object):
             del element.getparent()[0]
 
     def __iter__(self):
-        model = spacy.load("en")
+        model = spacy.load("en_core_web_lg")
         file_size = path.getsize(self.xml_path)
 
         with open(self.xml_path, 'rb') as fp:
             for i, (event, original_question) in enumerate(etree.iterparse(fp, tag="OrgQuestion")):
                 self.iteration = i
+
                 if self.skip > i:
                     self.iterator_cleanup(original_question)
                     continue

@@ -2,6 +2,7 @@ import gensim
 import basic_stats
 from word2vec_utils import tokenize_to_lower_case
 from lxml import etree
+from collections import namedtuple
 import os
 
 
@@ -9,13 +10,11 @@ class Sentences(object):
     def __init__(self, xml_path, verbose=False):
         self.xml_path = xml_path
         self.tokens_count = 0
-        self.iterations = 0
         self.verbose = verbose
 
     def __iter__(self):
         processed_ids = []
         self.tokens_count = 0
-        self.iterations += 1
 
         file_size = os.path.getsize(self.xml_path)
         with open(self.xml_path, mode='rb') as fp:
@@ -61,19 +60,45 @@ class Sentences(object):
                     yield tokenize
 
                 if self.verbose:
-                    print("Iteration = {}, Tokens = {}, Progress = {}".format(
-                        self.iterations,
+                    print("Tokens = {}, Progress = {}".format(
                         self.tokens_count,
                         float(fp.tell()) / file_size), end='\r')
 
                 original_question.clear()
 
+ModelDef = namedtuple('ModelDef', 'name, min_count, size, iterations')
 
-def train_model(data_src, model_name, window=5, iterations=10, workers=4, verbose=False):
-    sentences = Sentences(data_src, verbose=verbose)
-    model = gensim.models.Word2Vec(
-        sentences, min_count=5, window=window, iter=iterations, size=100, workers=workers)
-    model.save(model_name)
+def train_models(data_src, workers=4, verbose=False):
+    sentences = list(Sentences(data_src, verbose=verbose))
+
+    models = [
+        ModelDef('it10-mc5-s100', 5, 100, 10),
+        ModelDef('it30-mc5-s100', 5, 100, 30),
+        ModelDef('it50-mc5-s100', 5, 100, 50),
+        ModelDef('it10-mc10-s100', 10, 100, 10),
+        ModelDef('it30-mc10-s100', 10, 100, 30),
+        ModelDef('it50-mc10-s100', 10, 100, 50),
+        ModelDef('it10-mc5-s200', 5, 200, 10),
+        ModelDef('it30-mc5-s200', 5, 200, 30),
+        ModelDef('it50-mc5-s200', 5, 200, 50),
+        ModelDef('it10-mc10-s200', 10, 200, 10),
+        ModelDef('it30-mc10-s200', 10, 200, 30),
+        ModelDef('it50-mc10-s200', 10, 200, 50),
+    ]
+
+    for (name, min_count, size, iterations) in models:
+        if verbose:
+            print("Running \"{}\" model with min_count={}, iterations={}, size={}".format(
+                name, min_count, iterations, size))
+
+        # Create model name
+        file_name = os.path.basename(data_src)
+        model_name = "models/{}--{}.mdl".format(file_name, name)
+
+        # Train model
+        model = gensim.models.Word2Vec(
+            sentences, min_count=min_count, iter=iterations, size=size, workers=workers)
+        model.save(model_name)
 
 
 if __name__ == '__main__':
@@ -84,10 +109,6 @@ if __name__ == '__main__':
                         dest='data',
                         help='Training data path (default = data/Q1_sample.xml)',
                         default='../data/Q1_sample.xml')
-    parser.add_argument('--model-name',
-                        dest='model_name',
-                        help='Model file name',
-                        default='Q1_model')
     parser.add_argument('--verbose',
                         dest='verbose',
                         action='store_true')
@@ -96,17 +117,6 @@ if __name__ == '__main__':
                         help='How many workers to train w2v model',
                         default=4,
                         type=int)
-    parser.add_argument('--iterations',
-                        dest='iterations',
-                        help='How many training iterations',
-                        default=10,
-                        type=int)
-    parser.add_argument('--window',
-                        dest='window',
-                        help='Window size (word2vec)',
-                        default=5,
-                        type=int)
     args = parser.parse_args()
 
-    train_model(args.data, args.model_name, window=args.window,
-                workers=args.workers, iterations=args.iterations, verbose=args.verbose)
+    train_models(args.data, workers=args.workers, verbose=args.verbose)

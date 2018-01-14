@@ -7,9 +7,10 @@ import matplotlib.pyplot as plt
 import word2vec_model.word2vec_utils as word2vec
 import numpy as np
 import keras
+import time
 
 
-TRAINING_ITERATIONS = 100
+TRAINING_ITERATIONS = 10
 
 
 def create_model(units=[1], activ=["elu"], init=[keras.initializers.he_normal()], input_dim=200):
@@ -83,4 +84,4 @@ test_rec.set_label("recall (test)")
 plt.legend(handles=[test_loss, test_prec, test_rec], bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 plt.title("Feedforward - test")
 
-plt.savefig("subtask_C\plot.png", bbox_inches = "tight")
+plt.savefig("subtask_C\plots\\feedforward_" + time.strftime("%Y%m%d_%H%M%S") + ".png", bbox_inches = "tight")

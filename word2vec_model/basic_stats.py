@@ -1,11 +1,20 @@
 from bs4 import BeautifulSoup
+import os
 import re
 import nltk
 
 
 def load(file_name):
+    if not os.path.exists(file_name):
+        print("{} doesn't exist".format(file_name))
+        return None
+
+    content = None
     with open(file_name, 'r', encoding="utf8") as myfile:
-        return BeautifulSoup(myfile.read(), "xml")
+        content = myfile.read()
+
+    if content:
+        return BeautifulSoup(content, "xml")
 
 
 def remove_subject_from_question(question):

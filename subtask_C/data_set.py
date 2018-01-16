@@ -2,8 +2,14 @@ from basic_stats import load
 import word2vec_model.word2vec_utils as word2vec
 import numpy as np
 import pandas as pd
+import string
 from stop_words import get_stop_words
 from itertools import filterfalse
+
+
+GOOD = 0
+POT_USEFUL = 1
+BAD = 2
 
 
 def raw_dataframe(xml_file):
@@ -117,19 +123,19 @@ def raw_dataset(xml_file):
         id = org_question["ORGQ_ID"]
         if id not in processed_ids:
             processed_ids.append(id)
-            org_question_body = org_question.OrgQBody.text
+            org_question_body = filter_latin_alphabet(bytearray(org_question.OrgQBody.text, "utf-8"))
             if org_question_body == "":
                 print("WARN! empty question")
                 continue
         rel_comments = org_question("RelComment")
         for rel_comment in rel_comments:
-            rel_comment_text = rel_comment.RelCText.text
+            rel_comment_text = filter_latin_alphabet(bytearray(rel_comment.RelCText.text, "utf-8"))
             if rel_comment_text == "":
                 print("WARN! empty comment")
                 continue
             orgq_relc_pair = dict([("orgq", org_question_body),
                                    ("relc", rel_comment_text),
-                                   ("relc_orgq_relevance", rel_comment["RELC_RELEVANCE2ORGQ"])])
+                                   ("relc_orgq_relevance", get_comment_relevance(rel_comment))])
             dataset.append(orgq_relc_pair)
     print("Loading subtask C raw dataset [DONE]")
     return dataset
@@ -154,3 +160,20 @@ def sentences_dataset(xml_file, word2vec_model):
     print("Loading subtask C sentences dataset [DONE]")
     return np.asarray(questions), np.asarray(comments), np.asarray(relevace_labels)
 
+
+def get_comment_relevance(rel_comment):
+    relevance = rel_comment["RELC_RELEVANCE2ORGQ"]
+    if relevance == "Good":
+        return np.array(GOOD)
+    elif relevance == "PotentiallyUseful":
+        return np.array(POT_USEFUL)
+    elif relevance == "Bad":
+        return np.array(BAD)
+
+
+def filter_latin_alphabet(in_text):
+    out_text = ""
+    for char in in_text.decode("utf-8"):
+        if char in string.ascii_letters or char == " ":
+            out_text += char
+    return out_text

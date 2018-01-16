@@ -70,7 +70,7 @@ def build_extended_dataframe(df, w2v_model, shuffle=False, save_to=None, verbose
         perfect_match.copy(), w2v_model, verbose=verbose)
 
     # Build new dataframe
-    new_df = extend_perfect_match.append(related, ignore_index=True)
+    new_df = extended_perfect_match.append(related, ignore_index=True)
     new_df = new_df.append(irrelevant[:len(extended_perfect_match) * 3])
 
     if shuffle:

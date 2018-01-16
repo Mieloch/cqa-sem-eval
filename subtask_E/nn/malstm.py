@@ -94,13 +94,25 @@ def train_malstm(train_data_path, test_data_path, w2v_model_path):
     (X_train, Y_train), (X_validation, Y_validation), _ = prepare_dataset(
         train_df, test_df, max_seq_length=max_seq_length, validation_size=100)
 
+    # Build model
     malstm = model(embeddings, max_seq_length, n_hidden=50, embedding_dim=embedding_dim)
 
+    # Setup callbacks
+    checkpoint_name = 'model-{epoch: 02d}-{val_loss:.2f}.hdf5'
+    if checkpoint_prefix is not None:
+        checkpoint_name = checkpoint_prefix + checkpoint_name
+
+    checkpoint = ModelCheckpoint(filepath='../models/{}'.format(checkpoint_name),
+                                 period=1,
+                                 save_best_only=True)
+
+    # Training
     train_input = [X_train['left'], X_train['right']]
     validation_input = [X_validation['left'], X_validation['right']]
 
     trained = malstm.fit(train_input, Y_train, batch_size=64, epochs=10,
-                         validation_data=(validation_input, Y_validation))
+                         validation_data=(validation_input, Y_validation),
+                         callbacks=[checkpoint])
 
 
 if __name__ == '__main__':

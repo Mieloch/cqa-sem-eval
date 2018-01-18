@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
+
 from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
+from gensim.models import KeyedVectors
 
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import Model
@@ -10,32 +11,14 @@ import keras.backend as K
 from keras.optimizers import Adadelta
 from keras.callbacks import ModelCheckpoint
 
-from nn_utils import text_to_word_list, load_dataset, get_max_seq_length, prepare_dataset
+from nn_utils import text_to_word_list, get_max_seq_length, prepare_dataset
+from nn_utils import build_embeddings, build_vocabulary, convert_questions
 
 
-EMBEDDING_FILE = '/Volumes/DataDrive/models/GoogleNews-vectors-negative300.bin'
-TRAIN_CSV = '/Volumes/DataDrive/stripped/english-train-xsmall.csv'
-TEST_CSV = '/Volumes/DataDrive/stripped/english-devel-xsmall.csv'
-
-
-def plot_history(trained):
-    # Plot accuracy
-    plt.plot(trained.history['acc'])
-    plt.plot(trained.history['val_acc'])
-    plt.title('Model Accuracy')
-    plt.ylabel('Accuracy')
-    plt.xlabel('Epoch')
-    plt.legend(['Train', 'Validation'], loc='upper left')
-    plt.show()
-
-    # Plot loss
-    plt.plot(trained.history['loss'])
-    plt.plot(trained.history['val_loss'])
-    plt.title('Model Loss')
-    plt.ylabel('Loss')
-    plt.xlabel('Epoch')
-    plt.legend(['Train', 'Validation'], loc='upper right')
-    plt.show()
+DATA_DIR = '/Volumes/DataDrive'
+EMBEDDING_FILE = DATA_DIR + '/models/GoogleNews-vectors-negative300.bin'
+TRAIN_CSV = DATA_DIR + '/stripped/english-train-xsmall.csv'
+TEST_CSV = DATA_DIR + '/stripped/english-devel-xsmall.csv'
 
 
 def exponent_neg_manhattan_distance(lay):
@@ -47,15 +30,16 @@ def my_out_shape(shapes):
     return (shapes[0][0], 1)
 
 
-def model(embeddings, max_seq_length, embedding_dim=300, n_hidden=50, gradient_clipping_norm=1.25):
+def model(embeddings, max_seq_length, embedding_dim=300, n_hidden=50, gradient_clipping_norm=1.25, metrics=['accuracy', 'precision', 'recall']):
     '''Build MaLSTM network model'''
 
     # The visible layer
     left_input = Input(shape=(max_seq_length,), dtype='int32')
     right_input = Input(shape=(max_seq_length,), dtype='int32')
 
-    embedding_layer = Embedding(len(embeddings), embedding_dim, weights=[
-                                embeddings], input_length=max_seq_length, trainable=False)
+    embedding_layer = Embedding(
+        len(embeddings), embedding_dim, weights=[embeddings],
+        input_length=max_seq_length, trainable=False)
 
     # Embedded version of the inputs
     encoded_left = embedding_layer(left_input)
@@ -78,24 +62,42 @@ def model(embeddings, max_seq_length, embedding_dim=300, n_hidden=50, gradient_c
     optimizer = Adadelta(clipnorm=gradient_clipping_norm)
 
     malstm.compile(loss='mean_squared_error',
-                optimizer=optimizer, metrics=['accuracy'])
+                   optimizer=optimizer, metrics=['accuracy', 'precision', 'recall'])
 
     return malstm
 
 
-def train_malstm(train_data_path, test_data_path, w2v_model_path):
+def train_malstm(train_data_path, test_data_path, w2v_model_path, epochs=5, batch_size=64):
     embedding_dim = 300
 
-    train_df, test_df, vocabulary, embeddings = load_dataset(
-        train_data_path, test_data_path, w2v_model_path, embedding_dim=embedding_dim)
+    print('Loading CSV data...', end=' ')
+    train_df = pd.read_csv(train_path)
+    test_df = pd.read_csv(test_path)
+    print('Done.')
 
-    max_seq_length = get_max_seq_length(train_df, test_df)
+    print('Loading word2vec model...', end=' ')
+    w2v_model = KeyedVectors.load_word2vec_format(w2v_model_path, binary=True)
+    print('Done.')
 
-    (X_train, Y_train), (X_validation, Y_validation), _ = prepare_dataset(
-        train_df, test_df, max_seq_length=max_seq_length, validation_size=100)
+    # Prepare vocab and embeddings matrix
+    vocabulary = build_vocabulary([train_df, test_df], w2v_model)
+    embeddings = build_embeddings(vocabulary, w2v_model, embedding_dim)
+
+    # Remove word2vec model, as we don't need it anymore
+    del w2v_model
+
+    # Convert questions to number representations
+    convert_questions([train_df, test_df], vocabulary)
+
+    # Find max sequence length
+    max_seq_length = get_max_seq_length([train_df, test_df])
+
+    (X_train, Y_train), (X_validation, Y_validation) = prepare_dataset(
+        train_df, max_seq_length=max_seq_length, validation_size=100)
 
     # Build model
-    malstm = model(embeddings, max_seq_length, n_hidden=50, embedding_dim=embedding_dim)
+    malstm = model(embeddings, max_seq_length, n_hidden=50,
+                   embedding_dim=embedding_dim)
 
     # Setup callbacks
     checkpoint_name = 'model-{epoch: 02d}-{val_loss:.2f}.hdf5'
@@ -110,7 +112,7 @@ def train_malstm(train_data_path, test_data_path, w2v_model_path):
     train_input = [X_train['left'], X_train['right']]
     validation_input = [X_validation['left'], X_validation['right']]
 
-    trained = malstm.fit(train_input, Y_train, batch_size=64, epochs=10,
+    trained = malstm.fit(train_input, Y_train, batch_size=batch_size, epochs=epochs,
                          validation_data=(validation_input, Y_validation),
                          callbacks=[checkpoint])
 
@@ -129,4 +131,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    train_malstm(args.train_data_path, args.test_data_path, args.w2v_model_path)
+    train_malstm(args.train_data_path,
+                 args.test_data_path, args.w2v_model_path)

@@ -2,8 +2,10 @@ import re
 import numpy as np
 import pandas as pd
 import itertools
+import pickle
+import os
+import matplotlib.pyplot as plt
 
-from gensim.models import KeyedVectors
 from nltk.corpus import stopwords
 from sklearn.model_selection import train_test_split
 from keras.preprocessing.sequence import pad_sequences
@@ -19,14 +21,17 @@ def get_label_value(label):
         return 0
 
 
-def get_max_seq_length(train_df, test_df):
+def get_max_seq_length(dataframes):
     def len_fn(x):
         return len(x)
 
-    return max(train_df.original_question_text.map(len_fn).max(),
-               train_df.related_question_text.map(len_fn).max(),
-               test_df.original_question_text.map(len_fn).max(),
-               test_df.related_question_text.map(len_fn).max())
+    max_len = 0
+    for df in dataframes:
+        max_df_len = max(df.original_question_text.map(len_fn).max(),
+                         df.related_question_text.map(len_fn).max())
+        max_len = max(max_df_len, max_len)
+
+    return max_len
 
 
 def text_to_word_list(text):
@@ -70,7 +75,17 @@ def text_to_word_list(text):
     return text
 
 
-def build_vocabulary(train_df, test_df, w2v_model):
+def load_vocabulary(filepath):
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(
+            'Couldn\'t find vocabulary file: {}'.format(filepath))
+
+    with open(filepath, 'rb') as fp:
+        vocabulary = pickle.load(fp)
+        return vocabulary
+
+
+def build_vocabulary(dataframes, w2v_model, save_to=None):
     '''Build vocabulary best on both train and test dataset.
     It also modifies train_df and test_df in place!
     '''
@@ -79,12 +94,10 @@ def build_vocabulary(train_df, test_df, w2v_model):
     vocabulary = dict()
     inverse_vocabulary = ['<unk>']
 
-    for dataset in [train_df, test_df]:
+    for dataset in dataframes:
         for index, row in dataset.iterrows():
             # Iterate through the text of both questions of the row
             for question in QUESTION_COLS:
-                q2n = []  # q2n -> question numbers representation
-
                 for word in text_to_word_list(row[question]):
                     # Check for unwanted words
                     if word in stops and word not in w2v_model.vocab:
@@ -92,18 +105,43 @@ def build_vocabulary(train_df, test_df, w2v_model):
 
                     if word not in vocabulary:
                         vocabulary[word] = len(inverse_vocabulary)
-                        q2n.append(len(inverse_vocabulary))
                         inverse_vocabulary.append(word)
-                    else:
-                        q2n.append(vocabulary[word])
 
-                # Replace questions as word to question as number representation
-                dataset.set_value(index, question, q2n)
+    if save_to is not None:
+        if os.path.exists(save_to):
+            raise FileExistsError('Cannot overwrite {} file'.format(save_to))
+
+        with open(save_to, 'wb') as fp:
+            pickle.dump(vocabulary, fp)
 
     return vocabulary
 
 
-def build_embeddings(vocabulary, w2v_model, embedding_dim=300):
+def convert_questions(dataframes, vocabulary):
+    '''Converts original and related questions into number representation based on vocabulary'''
+    for dataset in dataframes:
+        for index, row in dataset.iterrows():
+            for question in QUESTION_COLS:
+                q2n = []
+
+                for word in text_to_word_list(row[question]):
+                    if word not in vocabulary:
+                        continue
+
+                    q2n.append(vocabulary[word])
+
+                dataset.at[index, question] = q2n
+
+
+def load_embeddings(filepath):
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(
+            'Couldn\'t find {} embeddings'.format(filepath))
+
+    return np.load(filepath)
+
+
+def build_embeddings(vocabulary, w2v_model, embedding_dim=300, save_to=None):
     # This will be the embedding matrix
     embeddings = 1 * np.random.randn(len(vocabulary) + 1, embedding_dim)
     embeddings[0] = 0  # So that the padding will be ignored
@@ -114,63 +152,69 @@ def build_embeddings(vocabulary, w2v_model, embedding_dim=300):
         if word in w2v_model.vocab:
             embeddings[index] = w2v_model.word_vec(word)
 
+    if save_to is not None:
+        if os.path.exists(save_to):
+            raise FileExistsError('Cannot overwrite {} file'.format(save_to))
+
+        np.save(save_to, embeddings)
+
     return embeddings
 
 
-def load_dataset(train_path, test_path, w2v_model_path, embedding_dim=300):
-    '''Load and prepare train and test dataset.
-
-    Returns: train, validation and test set
-    '''
-    print('Loading CSV data...', end=' ')
-    train_df = pd.read_csv(train_path)
-    test_df = pd.read_csv(test_path)
-    print('Done.')
-
-    print('Loading word2vec model...', end=' ')
-    w2v_model = KeyedVectors.load_word2vec_format(w2v_model_path, binary=True)
-    print('Done.')
-
-    vocabulary = build_vocabulary(train_df, test_df, w2v_model)
-    embeddings = build_embeddings(vocabulary, w2v_model, embedding_dim)
-
-    # We don't need it anymore
-    del w2v_model
-
-    return train_df, test_df, vocabulary, embeddings
+def make_pairs(df, max_seq_length):
+    left = pad_sequences(df.original_question_text.values,
+                         maxlen=max_seq_length)
+    right = pad_sequences(df.related_question_text.values,
+                          maxlen=max_seq_length)
+    return {'left': left, 'right': right}
 
 
-def prepare_dataset(train_df, test_df, max_seq_length=None, validation_size=100):
-    if max_seq_length is None:
-        max_seq_length = get_max_seq_length(train_df, test_df)
+def prepare_test_dataset(test_df, max_seq_length):
+    X_test = make_pairs(test_df, max_seq_length)
+    Y_test = test_df.relevance.map(get_label_value).values
+    return X_test, Y_test
 
+
+def prepare_dataset(train_df, max_seq_length, validation_size=100):
     train_set_size = len(train_df) - validation_size
 
     X = train_df[QUESTION_COLS]
-    Y = train_df['relevance'].map(get_label_value)
+    Y = train_df.relevance.map(get_label_value)
 
+    # Split dataset into train and validation set
     X_train, X_validation, Y_train, Y_validation = train_test_split(
         X, Y, test_size=validation_size)
 
     # Split to dicts
-    X_train = {'left': X_train.original_question_text,
-               'right': X_train.related_question_text}
-    X_validation = {'left': X_validation.original_question_text,
-                    'right': X_validation.related_question_text}
-    X_test = {'left': test_df.original_question_text,
-              'right': test_df.related_question_text}
+    X_train = make_pairs(X_train, max_seq_length)
+    X_validation = make_pairs(X_validation, max_seq_length)
 
     # Convert labels to their numpy representations
     Y_train = Y_train.values
     Y_validation = Y_validation.values
-    Y_test = test_df['relevance'].map(get_label_value).values
-
-    # Zero padding
-    for dataset, side in itertools.product([X_train, X_validation, X_test], ['left', 'right']):
-        dataset[side] = pad_sequences(dataset[side], maxlen=max_seq_length)
 
     # Make sure everything is ok
     assert X_train['left'].shape == X_train['right'].shape
     assert len(X_train['left']) == len(Y_train)
 
-    return (X_train, Y_train), (X_validation, Y_validation), (X_test, Y_test)
+    return (X_train, Y_train), (X_validation, Y_validation)
+
+
+def plot_history(trained):
+    # Plot accuracy
+    plt.plot(trained.history['acc'])
+    plt.plot(trained.history['val_acc'])
+    plt.title('Model Accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Validation'], loc='upper left')
+    plt.show()
+
+    # Plot loss
+    plt.plot(trained.history['loss'])
+    plt.plot(trained.history['val_loss'])
+    plt.title('Model Loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Validation'], loc='upper right')
+    plt.show()

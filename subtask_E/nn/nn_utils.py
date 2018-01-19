@@ -21,7 +21,7 @@ def get_label_value(label):
         return 0
 
 
-def get_max_seq_length(dataframes):
+def get_max_seq_length(dataframes, save_to=None):
     def len_fn(x):
         return len(x)
 
@@ -31,7 +31,20 @@ def get_max_seq_length(dataframes):
                          df.related_question_text.map(len_fn).max())
         max_len = max(max_df_len, max_len)
 
+    if save_to is not None:
+        with open(save_to, 'wb') as fp:
+            pickle.dump(max_len, fp)
+
     return max_len
+
+
+def load_max_seq_length(filename):
+    if not os.path.exists(filename):
+        raise FileNotFoundError('Max seq length file not found.')
+
+    with open(filename, 'rb') as fp:
+        max_seq_length = pickle.load(fp)
+        return max_seq_length
 
 
 def text_to_word_list(text):
@@ -138,7 +151,9 @@ def load_embeddings(filepath):
         raise FileNotFoundError(
             'Couldn\'t find {} embeddings'.format(filepath))
 
-    return np.load(filepath)
+    with open(filepath, 'rb') as fp:
+        embeddings = pickle.load(fp)
+        return embeddings
 
 
 def build_embeddings(vocabulary, w2v_model, embedding_dim=300, save_to=None):
@@ -146,7 +161,6 @@ def build_embeddings(vocabulary, w2v_model, embedding_dim=300, save_to=None):
     embeddings = 1 * np.random.randn(len(vocabulary) + 1, embedding_dim)
     embeddings[0] = 0  # So that the padding will be ignored
 
-    print("Building embedding matrix...")
     # Build the embedding matrix
     for word, index in vocabulary.items():
         if word in w2v_model.vocab:
@@ -156,7 +170,8 @@ def build_embeddings(vocabulary, w2v_model, embedding_dim=300, save_to=None):
         if os.path.exists(save_to):
             raise FileExistsError('Cannot overwrite {} file'.format(save_to))
 
-        np.save(save_to, embeddings)
+        with open(save_to, 'wb') as fp:
+            pickle.dump(embeddings, fp)
 
     return embeddings
 

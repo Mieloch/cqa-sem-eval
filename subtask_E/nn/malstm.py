@@ -53,7 +53,7 @@ def f1_score(y_true, y_pred):
     c3 = K.sum(K.round(K.clip(y_true, 0, 1)))
 
     # If there are no true samples, fix the F1 score at 0.
-    if c3 == 0:
+    if c3 == 0 or c2 == 0:
         return 0
 
     # How many selected items are relevant?

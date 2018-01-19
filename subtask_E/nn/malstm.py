@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import tensorflow as tf
 
 from sklearn.model_selection import train_test_split
 from gensim.models import KeyedVectors
@@ -30,7 +31,43 @@ def my_out_shape(shapes):
     return (shapes[0][0], 1)
 
 
-def model(embeddings, max_seq_length, embedding_dim=300, n_hidden=50, gradient_clipping_norm=1.25, metrics=['accuracy', 'precision', 'recall']):
+def f2_score(y_true, y_pred):
+    y_true = tf.cast(y_true, "int32")
+    # implicit 0.5 threshold via tf.round
+    y_pred = tf.cast(tf.round(y_pred), "int32")
+    y_correct = y_true * y_pred
+    sum_true = tf.reduce_sum(y_true, axis=1)
+    sum_pred = tf.reduce_sum(y_pred, axis=1)
+    sum_correct = tf.reduce_sum(y_correct, axis=1)
+    precision = sum_correct / sum_pred
+    recall = sum_correct / sum_true
+    f_score = 5 * precision * recall / (4 * precision + recall)
+    f_score = tf.where(tf.is_nan(f_score), tf.zeros_like(f_score), f_score)
+    return tf.reduce_mean(f_score)
+
+
+def f1_score(y_true, y_pred):
+    # Count positive samples.
+    c1 = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+    c2 = K.sum(K.round(K.clip(y_pred, 0, 1)))
+    c3 = K.sum(K.round(K.clip(y_true, 0, 1)))
+
+    # If there are no true samples, fix the F1 score at 0.
+    if c3 == 0:
+        return 0
+
+    # How many selected items are relevant?
+    precision = c1 / c2
+
+    # How many relevant items are selected?
+    recall = c1 / c3
+
+    # Calculate f1_score
+    f1_score = 2 * (precision * recall) / (precision + recall)
+    return f1_score
+
+
+def model(embeddings, max_seq_length, embedding_dim=300, n_hidden=50, gradient_clipping_norm=1.25, metrics=['accuracy']):
     '''Build MaLSTM network model'''
 
     # The visible layer
@@ -62,7 +99,7 @@ def model(embeddings, max_seq_length, embedding_dim=300, n_hidden=50, gradient_c
     optimizer = Adadelta(clipnorm=gradient_clipping_norm)
 
     malstm.compile(loss='mean_squared_error',
-                   optimizer=optimizer, metrics=['accuracy', 'precision', 'recall'])
+                   optimizer=optimizer, metrics=metrics)
 
     return malstm
 

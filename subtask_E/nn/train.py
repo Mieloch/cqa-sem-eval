@@ -1,6 +1,8 @@
 import argparse
 import pandas as pd
 import numpy as np
+import os
+import pathlib
 
 from gensim.models import KeyedVectors
 from keras.callbacks import CSVLogger, ModelCheckpoint
@@ -9,20 +11,51 @@ from nn_utils import build_embeddings, build_vocabulary, convert_questions, get_
 from malstm import model, f2_score
 
 
+TRAINING_LOGS_DIR = 'training/logs'
+TRAINING_MODELS_DIR = 'training/models'
+
+
+def check_env(data_dir):
+    model_file_exists = os.path.exists(
+        os.path.join(data_dir, 'models/GoogleNews-vectors-negative300.bin'))
+    train_file_exists = os.path.exists(
+        os.path.join(data_dir, 'merged/en-train-extended.csv'))
+    test_file_exists = os.path.exists(
+        os.path.join(data_dir, 'merged/en-test.csv'))
+
+    if not model_file_exists:
+        raise FileNotFoundError('Model file was not found.')
+
+    if not train_file_exists:
+        raise FileNotFoundError('Training file was not found.')
+
+    if not test_file_exists:
+        raise FileNotFoundError('Test file was not found.')
+
+    training_logs_path = pathlib.Path(os.path.join(data_dir, TRAINING_LOGS_DIR))
+    training_models_path = pathlib.Path(os.path.join(data_dir, TRAINING_MODELS_DIR))
+
+    training_logs_path.mkdir(parents=True, exist_ok=True)
+    training_models_path.mkdir(parents=True, exist_ok=True)
+
+
 def train_malstm(data_dir, epochs=5, batch_size=64, validation_size=3000, session_name='malstm-training'):
+    # Check environment for data files and make directories if they not
+    check_env(data_dir)
+
     print('Starting "{}" training session...'.format(session_name))
 
     embeddings_dim = 300
 
     print('Loading data...', sep=' ', end='', flush=True)
-    train_df = pd.read_csv(data_dir + '/merged/en-train-extended.csv')
-    test_df = pd.read_csv(data_dir + '/merged/en-test.csv')
+    train_df = pd.read_csv(os.path.join(data_dir, 'merged/en-train-extended.csv'))
+    test_df = pd.read_csv(os.path.join(data_dir, 'merged/en-test.csv'))
     print('Done.')
 
     # Load word2vec model trained on GoogleNews dataset
     print('Loading word2vec model...', sep=' ', end='', flush=True)
     w2v_model = KeyedVectors.load_word2vec_format(
-        data_dir + '/models/GoogleNews-vectors-negative300.bin', binary=True)
+        os.path.join(data_dir, 'models/GoogleNews-vectors-negative300.bin'), binary=True)
     print('Done.')
 
     # Prepare vocab and embeddings matrix
@@ -60,11 +93,10 @@ def train_malstm(data_dir, epochs=5, batch_size=64, validation_size=3000, sessio
 
     # Setup callbacks
     csv_logger = CSVLogger(
-        data_dir + '/training/logs/{}.csv'.format(session_name))
+        os.path.join(data_dir, TRAINING_LOGS_DIR, '{}.csv'.format(session_name)))
 
-    checkpoint_path = data_dir + \
-        '/training/models/' + session_name + \
-        '-{epoch: 02d}-{val_loss:.2f}.hdf5'
+    checkpoint_path = os.path.join(data_dir, TRAINING_MODELS_DIR,
+        session_name + '-{epoch:02d}-{val_loss:.2f}.hdf5')
     checkpoint = ModelCheckpoint(
         filepath=checkpoint_path, period=1, save_best_only=True)
 

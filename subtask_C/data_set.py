@@ -7,9 +7,9 @@ from stop_words import get_stop_words
 from itertools import filterfalse
 
 
-GOOD = 0
+GOOD = 1
 POT_USEFUL = 1
-BAD = 2
+BAD = 0
 
 
 def raw_dataframe(xml_file):

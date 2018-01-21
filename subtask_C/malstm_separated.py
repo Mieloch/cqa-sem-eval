@@ -22,7 +22,7 @@ from keras.utils import to_categorical
 def run_training(n_epoch):
     # File paths
     timestamp = time.strftime("%Y%m%d_%H%M%S")
-    modelname = "LSTM_128_1_denses"
+    modelname = "MaLSTM_separated_layers_merged_with_norm"
     TRAIN_CSV = 'subtask_C\\csv_data\\train.csv'
     TEST_CSV = 'subtask_C\\csv_data\\test.csv'
     EMBEDDING_FILE = 'word2vec_model\\GoogleNews-vectors-negative300.bin.gz'
@@ -174,28 +174,20 @@ def run_training(n_epoch):
     encoded_right = embedding_layer(right_input)
 
     # Since this is a siamese network, both sides share the same LSTM
-    shared_lstm = LSTM(n_hidden)
+    lstm_left = LSTM(n_hidden)
+    lstm_right = LSTM(n_hidden)
 
-    left_output = shared_lstm(encoded_left)
-    right_output = shared_lstm(encoded_right)
+    left_output = lstm_left(encoded_left)
+    right_output = lstm_right(encoded_right)
 
     # Calculates the distance as defined by the MaLSTM model
-    merged_vector = concatenate([left_output, right_output], axis=-1)
-
-    # malstm_distance = keras.layers.Merge(mode=lambda x: exponent_neg_manhattan_distance(x[0], x[1]),
-    #                                      output_shape=lambda x: (x[0][0], 1))([encoded_left, encoded_right])
-    x = Dropout(rate=0.5)(merged_vector)
-    x = Dense(units=128, activation='elu')(x)
-    # x = Dropout(rate=0.5)(x)
-    # x = Dense(units=64, activation='elu')(x)
-    # x = Dropout(rate=0.5)(x)
-    x = Dense(1)(x)
+    malstm_distance = Merge(mode=lambda x: exponent_neg_manhattan_distance(x[0], x[1]), output_shape=lambda x: (x[0][0], 1))([left_output, right_output])
 
     # Pack it all up into a model
-    lstm = Model([left_input, right_input], x)
+    lstm = Model([left_input, right_input], malstm_distance)
 
-    # optimizer = Adam(clipnorm=gradient_clipping_norm)
-    optimizer = SGD(lr=0.002, decay=1e-6, clipvalue=1.25)
+    optimizer = Adam(clipnorm=gradient_clipping_norm)
+    # optimizer = SGD(lr=0.002, decay=1e-6, clipvalue=1.25)
 
     lstm.compile(loss='mean_squared_error', optimizer=optimizer, metrics=['accuracy'])
 

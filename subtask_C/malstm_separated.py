@@ -22,8 +22,8 @@ from keras.utils import to_categorical
 def run_training(n_epoch):
     # File paths
     timestamp = time.strftime("%Y%m%d_%H%M%S")
-    modelname = "MaLSTM_separated_layers_merged_with_norm"
-    TRAIN_CSV = 'subtask_C\\csv_data\\train.csv'
+    modelname = "MaLSTM_separated_layers_merged_with_norm_augmented_set_adadelta "
+    TRAIN_CSV = 'subtask_C\\csv_data\\good_augmented_train.csv'
     TEST_CSV = 'subtask_C\\csv_data\\test.csv'
     EMBEDDING_FILE = 'word2vec_model\\GoogleNews-vectors-negative300.bin.gz'
     MODEL_SAVING_DIR = "subtask_C\\models\\" + modelname + "_" + timestamp
@@ -128,7 +128,7 @@ def run_training(n_epoch):
                          test_df.relc.map(lambda x: len(x)).max())
 
     # Split to train validation
-    validation_size = 4000
+    validation_size = 8000
     training_size = len(train_df) - validation_size
 
     X = train_df[cols]
@@ -186,7 +186,7 @@ def run_training(n_epoch):
     # Pack it all up into a model
     lstm = Model([left_input, right_input], malstm_distance)
 
-    optimizer = Adam(clipnorm=gradient_clipping_norm)
+    optimizer = Adadelta(clipnorm=gradient_clipping_norm)
     # optimizer = SGD(lr=0.002, decay=1e-6, clipvalue=1.25)
 
     lstm.compile(loss='mean_squared_error', optimizer=optimizer, metrics=['accuracy'])

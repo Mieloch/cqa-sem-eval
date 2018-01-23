@@ -10,7 +10,7 @@ def count_relevance(rels, pattern):
     return matched_count
 
 
-TRAIN_CSV = 'subtask_C\\csv_data\\data_not_binarized\\train.csv'
+TRAIN_CSV = 'subtask_C\\csv_data\\good_augmented_train.csv'
 train_df = pd.read_csv(TRAIN_CSV)
 
 s = train_df["relc_orgq_relevance"]
@@ -26,6 +26,8 @@ good_percent = good / total * 100
 potentially_useful_percent = potentially_useful / total * 100
 bad_percent = bad / total * 100
 good_overall_percent = good_overall / total * 100
+
+print("Total set length: " + str(total))
 
 print("Good %: " + str(good_percent))
 print("PotentiallyUseful %: " + str(potentially_useful_percent))

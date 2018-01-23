@@ -11,7 +11,7 @@ FILE_NAME = "subtask_C\\csv_data\\train.csv"
 EMBEDDING_FILE = "word2vec_model\\GoogleNews-vectors-negative300.bin.gz"
 QUESTION_TEXT = "orgq"
 COMMENT_TEXT = "relc"
-RELEVANCE = "orgq_relc_relevance"
+RELEVANCE = "relc_orgq_relevance"
 
 
 # create embedding matrix
@@ -54,6 +54,7 @@ def text_to_words(text):
 
 
 questions_cols = [QUESTION_TEXT, COMMENT_TEXT]
+question_cols = [COMMENT_TEXT]
 word2vec = KeyedVectors.load_word2vec_format(EMBEDDING_FILE, binary=True)
 stop_words = get_stop_words('en')
 data_frame = pd.read_csv(FILE_NAME)
@@ -62,23 +63,24 @@ print("original data_frame size : {}".format(len(data_frame)))
 cp = data_frame.copy()
 
 for index, row in cp.iterrows():
-    for question_col in questions_cols:
-        similarities = {}
-        v = []
-        for word in text_to_words(row[question_col]):
-            if word not in stop_words and word in word2vec.vocab:
-                synonym, similarity = word2vec.similar_by_word(word, topn=1)[0]
-                if similarity > 0.7:
-                    similarities[word] = {'word': word, 'synonym': synonym, 'similarity': similarity}
-        similarities_list = list(similarities.values())
-        similarities_list.sort(key=lambda x: x["similarity"], reverse=True)
-        for best in similarities_list[0:3]:
-            with_similar = str(row[question_col]).lower().replace(best['word'], best['synonym'])
-            new_row = copy.deepcopy(row)
-            new_row[question_col] = with_similar
-            data_frame = data_frame.append(new_row)
-    if index % 100 == 0:
-        print("augmented data_frame size : {}".format(len(data_frame)))
-        data_frame.to_csv("subtask_C\\csv_data\\augmented_train.csv", encoding="utf-8")
+    if row[RELEVANCE] == 1:
+        for question_col in questions_cols:
+            similarities = {}
+            v = []
+            for word in text_to_words(row[question_col]):
+                if word not in stop_words and word in word2vec.vocab:
+                    synonym, similarity = word2vec.similar_by_word(word, topn=1)[0]
+                    if similarity > 0.7:
+                        similarities[word] = {'word': word, 'synonym': synonym, 'similarity': similarity}
+            similarities_list = list(similarities.values())
+            similarities_list.sort(key=lambda x: x["similarity"], reverse=True)
+            for best in similarities_list[0:3]:
+                with_similar = str(row[question_col]).lower().replace(best['word'], best['synonym'])
+                new_row = copy.deepcopy(row)
+                new_row[question_col] = with_similar
+                data_frame = data_frame.append(new_row)
+        if index % 100 == 0:
+            print("augmented data_frame size : {}".format(len(data_frame)))
+            data_frame.to_csv("subtask_C\\csv_data\\good_augmented_train.csv", encoding="utf-8")
 print("augmented data_frame size : {}".format(len(data_frame)))
-data_frame.to_csv("subtask_C\\csv_data\\augmented_train.csv", encoding="utf-8")
+data_frame.to_csv("subtask_C\\csv_data\\good_augmented_train.csv", encoding="utf-8")

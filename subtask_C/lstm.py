@@ -15,14 +15,14 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.models import Model
 from keras.layers import Input, Embedding, LSTM, Merge, Dense, concatenate, Dropout
 import keras.backend as K
-from keras.optimizers import Adadelta, Adam
+from keras.optimizers import Adadelta, Adam, SGD
 from keras.utils import to_categorical
 
 
 def run_training(n_epoch):
     # File paths
     timestamp = time.strftime("%Y%m%d_%H%M%S")
-    modelname = "LSTM_softmax_dense"
+    modelname = "LSTM_128_1_denses"
     TRAIN_CSV = 'subtask_C\\csv_data\\train.csv'
     TEST_CSV = 'subtask_C\\csv_data\\test.csv'
     EMBEDDING_FILE = 'word2vec_model\\GoogleNews-vectors-negative300.bin.gz'
@@ -132,7 +132,7 @@ def run_training(n_epoch):
     training_size = len(train_df) - validation_size
 
     X = train_df[cols]
-    Y = to_categorical(train_df['relc_orgq_relevance'])
+    Y = train_df['relc_orgq_relevance']
 
     X_train, X_validation, Y_train, Y_validation = train_test_split(X, Y, test_size=validation_size)
 
@@ -158,7 +158,6 @@ def run_training(n_epoch):
     n_hidden = 128
     gradient_clipping_norm = 1.25
     batch_size = 64
-    # n_epoch = 25
 
     def exponent_neg_manhattan_distance(left, right):
         ''' Helper function for the similarity estimate of the LSTMs outputs'''
@@ -186,32 +185,32 @@ def run_training(n_epoch):
     # malstm_distance = keras.layers.Merge(mode=lambda x: exponent_neg_manhattan_distance(x[0], x[1]),
     #                                      output_shape=lambda x: (x[0][0], 1))([encoded_left, encoded_right])
     x = Dropout(rate=0.5)(merged_vector)
-    # x = Dense(units=128, activation='elu')(x)
+    x = Dense(units=128, activation='elu')(x)
     # x = Dropout(rate=0.5)(x)
     # x = Dense(units=64, activation='elu')(x)
     # x = Dropout(rate=0.5)(x)
-    x = Dense(3, activation="softmax")(x)
+    x = Dense(1)(x)
 
     # Pack it all up into a model
-    malstm = Model([left_input, right_input], [x])
+    lstm = Model([left_input, right_input], x)
 
-    # Adadelta optimizer, with gradient clipping by norm
-    optimizer = Adam(clipnorm=gradient_clipping_norm)
+    # optimizer = Adam(clipnorm=gradient_clipping_norm)
+    optimizer = SGD(lr=0.002, decay=1e-6, clipvalue=1.25)
 
-    malstm.compile(loss='mean_squared_error', optimizer=optimizer, metrics=['accuracy'])
+    lstm.compile(loss='mean_squared_error', optimizer=optimizer, metrics=['accuracy'])
 
     # Start training
     training_start_time = time.time()
 
-    malstm_trained = malstm.fit([X_train['left'], X_train['right']], Y_train, batch_size=batch_size, epochs=n_epoch,
+    lstm_trained = lstm.fit([X_train['left'], X_train['right']], Y_train, batch_size=batch_size, epochs=n_epoch,
                                 validation_data=([X_validation['left'], X_validation['right']], Y_validation))
 
     print("Training time finished.\n{} epochs in {}".format(n_epoch, datetime.timedelta(seconds=time.time()-training_start_time)))
 
 
     # Plot accuracy
-    plt.plot(malstm_trained.history['acc'])
-    plt.plot(malstm_trained.history['val_acc'])
+    plt.plot(lstm_trained.history['acc'])
+    plt.plot(lstm_trained.history['val_acc'])
     plt.title('Model Accuracy')
     plt.ylabel('Accuracy')
     plt.xlabel('Epoch')
@@ -221,8 +220,8 @@ def run_training(n_epoch):
     plt.close()
 
     # Plot loss
-    plt.plot(malstm_trained.history['loss'])
-    plt.plot(malstm_trained.history['val_loss'])
+    plt.plot(lstm_trained.history['loss'])
+    plt.plot(lstm_trained.history['val_loss'])
     plt.title('Model Loss')
     plt.ylabel('Loss')
     plt.xlabel('Epoch')

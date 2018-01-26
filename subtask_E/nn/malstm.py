@@ -7,7 +7,7 @@ from gensim.models import KeyedVectors
 
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import Model
-from keras.layers import Input, Embedding, LSTM, Merge, Lambda
+from keras.layers import Input, Embedding, LSTM, Merge, Lambda, Activation
 import keras.backend as K
 from keras.optimizers import Adadelta
 from keras.callbacks import ModelCheckpoint
@@ -92,8 +92,10 @@ def model(embeddings, max_seq_length, embedding_dim=300, n_hidden=50, gradient_c
     malstm_distance = Lambda(exponent_neg_manhattan_distance,
                              output_shape=my_out_shape)([left_output, right_output])
 
+    softmax = Activation('softmax')(malstm_distance)
+
     # Pack it all up into a model
-    malstm = Model([left_input, right_input], [malstm_distance])
+    malstm = Model([left_input, right_input], [softmax])
 
     # Adadelta optimizer, with gradient clipping by norm
     optimizer = Adadelta(clipnorm=gradient_clipping_norm)

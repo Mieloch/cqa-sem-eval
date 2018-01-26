@@ -27,6 +27,11 @@ def exponent_neg_manhattan_distance(lay):
     return K.exp(-K.sum(K.abs(lay[0] - lay[1]), axis=1, keepdims=True))
 
 
+def exponent_neg_manhattan_distance_binary(lay):
+    '''Overriden exponent manhattan distance function'''
+    return K.round(K.exp(-K.sum(K.abs(lay[0] - lay[1]), axis=1, keepdims=True)))
+
+
 def my_out_shape(shapes):
     return (shapes[0][0], 1)
 
@@ -92,15 +97,50 @@ def model(embeddings, max_seq_length, embedding_dim=300, n_hidden=50, gradient_c
     malstm_distance = Lambda(exponent_neg_manhattan_distance,
                              output_shape=my_out_shape)([left_output, right_output])
 
-    softmax = Activation('softmax')(malstm_distance)
-
     # Pack it all up into a model
-    malstm = Model([left_input, right_input], [softmax])
+    malstm = Model([left_input, right_input], [malstm_distance])
 
     # Adadelta optimizer, with gradient clipping by norm
     optimizer = Adadelta(clipnorm=gradient_clipping_norm)
 
     malstm.compile(loss='mean_squared_error',
+                   optimizer=optimizer, metrics=metrics)
+
+    return malstm
+
+
+def model_modified():
+    '''Build MaLSTM network model (modified)'''
+
+    # The visible layer
+    left_input = Input(shape=(max_seq_length,), dtype='int32')
+    right_input = Input(shape=(max_seq_length,), dtype='int32')
+
+    embedding_layer = Embedding(
+        len(embeddings), embedding_dim, weights=[embeddings],
+        input_length=max_seq_length, trainable=False)
+
+    # Embedded version of the inputs
+    encoded_left = embedding_layer(left_input)
+    encoded_right = embedding_layer(right_input)
+
+    # Since this is a siamese network, both sides share the same LSTM
+    shared_lstm = LSTM(n_hidden)
+
+    left_output = shared_lstm(encoded_left)
+    right_output = shared_lstm(encoded_right)
+
+    # Calculates the distance as defined by the MaLSTM model
+    malstm_distance = Lambda(exponent_neg_manhattan_distance,
+                             output_shape=my_out_shape)([left_output, right_output])
+
+    # Pack it all up into a model
+    malstm = Model([left_input, right_input], [malstm_distance])
+
+    # Adadelta optimizer, with gradient clipping by norm
+    optimizer = Adadelta(clipnorm=gradient_clipping_norm)
+
+    malstm.compile(loss='categorical_crossentropy',
                    optimizer=optimizer, metrics=metrics)
 
     return malstm

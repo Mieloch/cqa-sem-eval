@@ -140,7 +140,7 @@ def model_modified(embeddings, max_seq_length, embedding_dim=300, n_hidden=50, g
     # Adadelta optimizer, with gradient clipping by norm
     optimizer = Adadelta(clipnorm=gradient_clipping_norm)
 
-    malstm.compile(loss='categorical_crossentropy',
+    malstm.compile(loss='sparse_categorical_crossentropy',
                    optimizer=optimizer, metrics=metrics)
 
     return malstm

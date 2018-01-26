@@ -109,7 +109,7 @@ def model(embeddings, max_seq_length, embedding_dim=300, n_hidden=50, gradient_c
     return malstm
 
 
-def model_modified():
+def model_modified(embeddings, max_seq_length, embedding_dim=300, n_hidden=50, gradient_clipping_norm=1.25, metrics=['accuracy']):
     '''Build MaLSTM network model (modified)'''
 
     # The visible layer

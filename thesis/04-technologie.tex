@@ -1,0 +1,17 @@
+\chapter{Technologie}
+Przed rozpoczęciem pracy należało rozważyć wybór technologii do zrealizowania algorytmów uczenia maszynowego rozwiązujących przedstawione problemy. Do implementacji został wybrany język Python ze względu na największy dostęp bibliotek związanych z analizą danych i uczeniem maszynowym. Język ten cieszy się ogromną popularnością wśród społeczności inżynierów danych, co również przeważyło na jego korzyść. Do zaimplementowania sieci neuronowej wykorzystano bibliotekę TensorFlow wraz z wysokopoziomową nakładką Keras. Dodatkowo użyto kilku bibliotek pomocniczych takich jak NLTK i Gensim. Wykorzystano również wcześniej wytrenowane word-embeddingi pochodzące ze zbioru GoogleNews-word2vec.
+
+\section{TensorFlow}
+TensorFlow \cite{tensorflow2015-whitepaper} to biblioteka o otwartych kodach źródłowych (ang. \textit{open source}) służąca do wykonywania obliczeń numerycznych z wykorzystaniem grafów przepływów danych. Elastyczna architektura ułatwia komunikację między CPU i GPU za pomocą jednego API. TensorFlow jest rozwijany przez Google Brain Team w celu rozwoju badań nad uczeniem maszynowym i głębokimi sieciami neuronowymi.
+
+\section{Keras}
+Keras \cite{keras} to wysokopoziomowe API umożliwiające łatwe i wygodne programowanie sieci neuronowych. Keras może korzystać z różnych silników obliczeniowych między innymi z TensorFlow. Wspiera on sieci konwolucyjne, rekurencyjne, a nawet bardziej zaawansowane modele takie jak np. sieci syjamskie. 
+
+\section{NLTK}
+NLTK (ang. \textit{Natural Language Toolkit})~\cite{nltk} to przodująca platforma do budowania programów przetwarzających dane związane z językiem naturalnym. Udostępnia łatwy w użyciu interfejs pozwalający wykonywać zadania związane z przetwarzaniem tekstu, takie jak klasyfikacja, tokenizacja lub parsowanie.
+
+\section{Gensim}
+Gensim \cite{rehurek_lrec} jest jedną z wydajniejszych i prostszych w użyciu bibliotek realizujących nienadzorowane modelowanie semantyczne na podstawie czystego tekstu. Gensim został wykorzystany do obsługi wcześniej wytrenowanych embeddingów pochodzących z bazy GoogleNews-word2vec. 
+
+\section{GoogleNews-word2vec}
+Publiczna baza word-embeddingów wytrenowanych na podstawie części dokumentów ze zbioru danych Google News. Model zawiera 300 wymiarowe wektory dla ponad 3 milionów słów.

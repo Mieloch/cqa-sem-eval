@@ -1,0 +1,44 @@
+\chapter{Wstęp}
+
+\section{Uzasadnienie podjęcia tematu}
+W internecie coraz większą popularnością cieszą się fora CQA (ang. \textit{Community Question Answering}). Tego typu fora rzadko ograniczają kto i na jaki temat może zadać pytanie lub napisać odpowiedź. W rezultacie użytkownicy mają dużą swobodę publikowania pytań i mogą liczyć na szczere odpowiedzi poparte doświadczeniami innych. Niestety problem stwarza duża liczba udzielonych odpowiedzi. Przeczytanie ich wszystkich może się okazać bardzo czasochłonne. Dodatkowe trudności może też sprawiać zrozumienie skomplikowanych odpowiedzi. Rozwiązaniem tego problemu byłby system automatyzujący proces szukania odpowiedzi.
+Stworzenie takiego systemu zostało zaproponowane jako temat jednego z zadań w konkursie SemEval 2017. \cite{SemEval-2017:task3} Konkurs ten jest organizowany co roku pod patronatem grupy SIGLEX (ang. \textit{Special Interest Group on the Lexicon of the Association for Computatnional Linguistics}). 
+
+\section{Cel pracy}
+Celem pracy jest stworzenie systemu, który będzie spełniał wymagania określone w zadaniu trzecim konkursu SemEval 2017. Zadanie polega na stworzeniu modeli klasyfikujących, działających na danych charakterystycznych dla forum typu CQA. %(Community Question Answearing).
+
+\section{Zakres pracy}
+Zakres pracy obejmuje następujące zadania:
+\begin{itemize}
+  \item zapoznanie się z podstawowymi metodami przetwarzania języka naturalnego,
+  \item zrozumienie podstaw działania modeli uczących, w szczególności sieci neuronowych oraz nabycie umiejętności realizacji takich modeli,
+  \item stworzenie modelu klasyfikującego istniejące pytania pod względem podobieństwa do nowego pytania,
+  \item stworzenie modelu klasyfikującego istniejące odpowiedzi pod względem użyteczności dla istniejących pytań,
+  \item stworzenie modelu klasyfikującego istniejące odpowiedzi pod względem użyteczności dla nowego pytania,
+  \item ewaluacja skuteczności każdego z modeli.
+\end{itemize}
+
+Ze względu na dopasowanie liczby podzadań w konkursie do liczby osób w zespole realizującym pracę dyplomową, postanowiono przydzielić każdej osobie jedno podzadanie. Dodatkowo, przed przystąpieniem do implementacji, każdy musiał zapoznać się z tematyką przetwarzania języka naturalnego i wchodzącymi w jej skład technikami uczenia maszynowego.
+%AL%%% - być może warto wcześniej napisać, że zadanie trzecie w SemEval dzieli się na podzadania A, B,C,D,E, bo bez tego odwołujemy się do tych numerów, o których wcześniej nie było mowy. Być może warto by też było napisać po jednym zdaniu, bardzo skrótowo (jak się uda) na czym polega każde z tych podzadań.  
+\begin{center}
+\begin{tabular}{ | p{3cm} | p{10cm} | }
+ \hline
+  Osoba & Zadania \\
+ \hline
+ Jacek Kubiak & Opanowanie podstawowej wiedzy z zakresu przetwarzania języka naturalnego, realizacja podzadania B \\ 
+ \hline
+ Tomasz Kasperek & Opanowanie podstawowej wiedzy z zakresu przetwarzania języka naturalnego, realizacja podzadania E \\  
+ \hline
+ Mikołaj Szal & Opanowanie podstawowej wiedzy z zakresu przetwarzania języka naturalnego, realizacja podzadania C \\
+ \hline
+ Paweł Mieloch & Opanowanie podstawowej wiedzy z zakresu przetwarzania języka naturalnego, realizacja podzadania A \\
+ \hline
+\end{tabular}
+\end{center}
+
+\section{Źródła}
+Jako główne źródło nabywania wiedzy o uczeniu maszynowym posłużyła książka ,,\emph{Hands-On Machine Learning}'' \cite{handson2017}. Dodatkowo wykorzystano kilka artykułów dostępnych w internecie, m.in. artykuł na temat syjamskich sieci neuronowych \cite{malstm:medium}.
+
+\section{Układ pracy}
+
+W drugim rozdziale zostały opisane teoretyczne podstawy, skupiające się na wytłumaczeniu pojęć kluczowych do zrozumienia pracy. W rozdziale trzecim, wyjaśniona została struktura danych oraz treści poszczególnych podzadań. Kolejny rozdział opisuje technologie wykorzystane do zrealizowania pracy. Rozdział piąty to wyjaśnienie wykorzystanych architektur sieci neuronowych oraz szczegółowy opis wykonanych eksperymentów i rezultatów uczenia sieci neuronowych. Ostatni rozdział jest podsumowaniem, przedstawiającym wnioski oraz spostrzeżenia wyniesione z pracy.

@@ -1,0 +1,33 @@
+\chapter{Specyfikacja wymagań}
+System powinien realizować cztery główne funkcje, opisane w konkursie Sem-Eval jako podzadania A, B, C oraz E.
+
+\section{Opis danych}
+System powinien zostać stworzony w oparciu o dostarczony zbiór danych. Dane pochodzą z forów internetowych Qatar Living oraz Stack Exchange i mają ściśle określoną budowę. Zbiór, wraz z opisem, jest dostępny na stronie konkursu.
+
+\subsection{Dane dla zadań A -- C}
+Zbiór danych jest dostarczony w plikach o formacie XML. Zorganizowany jest jako sekwencja oryginalnych pytań (nie zadanych wcześniej na forum), do których jest przypisane po dziesięć wątków. Każdy wątek składa się z pytania powiązanego oraz dziesięciu komentarzy.
+Każdy komentarz w wątku posiada dwie etykiety. Pierwsza określa w jakim stopniu komentarz odpowiada na oryginalne pytanie, druga w jakim stopniu odpowiada na pytanie powiązane. Obie te etykiety mogą przyjmować jedną z trzech wartości: ,,Good'', ,,PotentiallyUseful'', ,,Bad''.
+Każde powiązane pytanie zawiera natomiast etykietę określającą podobieństwo do oryginalnego pytania. Wartości jakie przyjmuje ta etykieta to: ,,PerfectMatch'', ,,Relevant'', ,,Irrelevant''.
+
+\subsection{Dane dla zadania E}
+Zbiór danych dla tego zadania składa się z sekwencji oryginalnych pytań oraz 50 wątków zawierających jedno pytanie powiązane wzbogacone o atrybuty: kategoria, data, tagi, punktacja, liczba wyświetleń, identyfikator użytkownika oraz etykietę:
+\begin{itemize}
+\item „PerfectMatch'' – informującą o tym, że pytanie prawie całkowicie pokrywa się z pytaniem oryginalnym,
+\item „Related'' – informującą, że pytanie zgadza się częściowo z pytaniem oryginalnym,
+\item „Irrelevant'' – informującą, że różni się całkowicie od pytania oryginalnego
+\end{itemize}.
+W wątku może znajdować się również wiele odpowiedzi na pytanie powiązane oraz komentarze zawierające dodatkowe pola tj.: punktację, identyfikator użytkownika oraz datę umieszczenia. Powiązana odpowiedź zawiera również informację o tym, czy została zaakceptowana przez autora pytania.
+
+\section{Zadania systemu}
+
+\subsection{Podzadanie A}
+Zadanie polega na wyznaczeniu trafności odpowiedzi na dane pytanie. Mając pytanie oraz pierwszych 10 komentarzy, należy sklasyfikować komentarze biorąc pod uwagę ich związek z tematem pytania. Komentarze posiadające etykietę ,,Good'' powinny trafniej odpowiadać na pytanie niż te z etykietami ,,PotientallyUseful'' i ,,Bad''. Dwie ostatnie etykiety nie są rozróżnialne i mogą zostać sprowadzone do jednej.
+
+\subsection{Podzadanie B}
+Zadanie polega na wyznaczeniu podobieństwa między dwoma pytaniami. Mając nowe pytanie oraz zbiór 10 powiązanych pytań, należy sklasyfikować powiązane pytania, biorąc pod uwagę ich związek z nowym pytaniem. Pytania z etykietami ,,PerfectMatch'' oraz ,,Relevant'' są uznawane za równie dobre, nie rozróżniamy ich. Powinny mieć wyższe podobieństwo od tych z etykietą ,,Irrelevant''.
+
+\subsection{Podzadanie C}
+Zadanie polega na wyznaczeniu dla pytania najbardziej trafnych odpowiedzi, które pochodzą z różnych wątków. Mając nowe pytanie (nazwijmy to głównym pytaniem) i zbiór powiązanych pytań (pierwsze 10) - każde  wraz z odpowiedziami (pierwszymi 10-cioma), należy sklasyfikować tych 100 odpowiedzi biorąc pod uwagę ich związek z głównym pytaniem. Komentarze z etykietą ,,Good'' powinny trafniej odpowiadać na pytanie niż komentarze z etykietą ,,PotentiallyUseful'' lub ,,Bad''. Ostatnie dwie etykiety uznane są za identyczne i zostały zredukowane do jednej.
+
+\subsection{Podzadanie E}
+Podzadanie E polega na detekcji zduplikowanych pytań. 50 potencjalnie zduplikowanych pytań należy sklasyfikować mając na względzie ich podobieństwo do zadanego pytania. Następnie należy usunąć ze zbioru pytania, tak aby ostateczny rezultat zawierał wyłącznie pytania z etykietą ,,PerfectMatch''. Pytania z etykietami ,,Related'' oraz ,,Irrelevant'' powinny zostać pominięte.

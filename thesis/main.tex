@@ -1,0 +1,60 @@
+\documentclass[polish,bachelor,a4paper,oneside]{ppfcmthesis}
+
+\usepackage[utf8]{inputenc}
+\usepackage[OT4]{fontenc}
+\usepackage{polski}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\graphicspath{{figures/images/}}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{subcaption}
+\usepackage{listings}
+
+
+% Authors of the thesis here. Separate them with \and
+\author{%
+   Jacek Kubiak \album{116307} \and 
+   Tomasz Kasperek \album{116393} \and
+   Mikołaj Szal \album{117068} \and 
+   Paweł Mieloch \album{117077}}
+\authortitle{} % Do not change.
+\title{Opracowanie systemu automatycznego proponowania odpowiedzi dla nowych pytań na~forach Q\&A} % Note how we protect the final title phrase from breaking
+\ppsupervisor{dr~inż.~Agnieszka Ławrynowicz}
+\ppguide{mgr~inż.~Dawid Wiśniewski}
+\ppyear{2018}
+
+\begin{document}
+
+% Front matter starts here
+\frontmatter\pagestyle{empty}%
+\maketitle\cleardoublepage%
+
+% Blank info page for "karta dyplomowa"
+\thispagestyle{empty}\vspace*{\fill}%
+\begin{center}Tutaj przychodzi karta pracy dyplomowej;\\oryginał wstawiamy do wersji dla archiwum PP, w pozostałych kopiach wstawiamy ksero.\end{center}%
+\vfill\cleardoublepage%
+
+% Table of contents.
+\pagenumbering{Roman}\pagestyle{ppfcmthesis}%
+\tableofcontents* \cleardoublepage%
+
+\mainmatter
+\input{01-wstep.tex}
+\input{02-teoria.tex}
+\input{03-specyfikacja.tex}
+\input{04-technologie.tex}
+\input{05-implementacja_architektura_sieci.tex}
+\input{05-implementacja_subtask_a.tex}
+\input{05-implementacja_subtask_b.tex}
+\input{05-implementacja_subtask_c.tex}
+\input{05-implementacja_subtask_e.tex}
+\input{06-zakonczenie.tex}
+
+% Bibliography (books, articles) starts here.
+\bibliographystyle{plalpha}{\raggedright\sloppy\small\bibliography{bibliography}}
+
+% Colophon is a place where you should let others know about copyrights etc.
+\ppcolophon
+
+\end{document}

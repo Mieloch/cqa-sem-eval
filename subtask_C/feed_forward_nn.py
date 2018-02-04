@@ -10,7 +10,7 @@ import keras
 import time
 
 
-TRAINING_ITERATIONS = 10
+TRAINING_ITERATIONS = 100
 
 
 def create_model(units=[1], activ=["elu"], init=[keras.initializers.he_normal()], input_dim=200):
@@ -21,7 +21,7 @@ def create_model(units=[1], activ=["elu"], init=[keras.initializers.he_normal()]
             model.add(Dense(units=current_layer_units, activation=current_layer_activ, kernel_initializer=current_layer_init))
             model.add(Dropout(0.5))
     model.add(Dense(3, activation="softmax"))
-    
+
     model.compile(optimizer=keras.optimizers.SGD(lr=0.03, momentum=0.0, decay=0.0, nesterov=False),
               loss="categorical_crossentropy",
               metrics=[precision, recall])
@@ -29,8 +29,8 @@ def create_model(units=[1], activ=["elu"], init=[keras.initializers.he_normal()]
 
 
 #load X, y
-word2vec_model = word2vec.load_word2vec_model("SemEval2016-Task3-CQA-QL-dev_model")
-org_questions, rel_comments, y = sentences_dataset("data/SemEval2016-Task3-CQA-QL-dev.xml", word2vec_model)
+word2vec_model = word2vec.load_word2vec_model("SemEval2016-Task3-CQA-QL-dev_")
+org_questions, rel_comments, y = sentences_dataset("data/SemEval2016-Task3-CQA-QL-train-part1.xml", word2vec_model)
 X = np.concatenate((org_questions, rel_comments), axis=1)
 
 #transform class labels
@@ -41,9 +41,9 @@ y = lb.fit_transform(y)
 X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
 #create compiled model
-units = [50, 100, 100]
-activ=["elu", "elu", "elu"]
-init=[keras.initializers.he_normal(), keras.initializers.he_normal(), keras.initializers.he_normal()]
+units = [128, 128, 64]
+activ = ["elu", "elu", "elu"]
+init = [keras.initializers.he_normal(), keras.initializers.he_normal(), keras.initializers.he_normal()]
 model = create_model(units=units, init=init, activ=activ, input_dim=X_train.shape[1])
 
 # train model
@@ -74,7 +74,7 @@ train_loss.set_label("loss (train)")
 train_prec.set_label("precision (train)")
 train_rec.set_label("recall (train)")
 plt.legend(handles=[train_loss, train_prec, train_rec], bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-plt.title("Feedforward - train")
+plt.title("Feed-forward - train")
 
 plt.subplot(212)
 test_loss, test_prec, test_rec = plt.plot(x, test_log["loss"], 'r', x, test_log["prec"], 'g', x, test_log["rec"], 'b')
@@ -82,6 +82,6 @@ test_loss.set_label("loss (test)")
 test_prec.set_label("precision (test)")
 test_rec.set_label("recall (test)")
 plt.legend(handles=[test_loss, test_prec, test_rec], bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-plt.title("Feedforward - test")
+plt.title("Feed-forward - test")
 
 plt.savefig("subtask_C\plots\\feedforward_" + time.strftime("%Y%m%d_%H%M%S") + ".png", bbox_inches = "tight")

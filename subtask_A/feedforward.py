@@ -1,32 +1,21 @@
-import itertools
 import re
-import pydot
-import graphviz
+
 import keras
-import keras.backend as K
 import matplotlib.pyplot as plt
 import nltk
 import numpy as np
 import pandas as pd
 from gensim.models import KeyedVectors
-from keras.preprocessing.sequence import pad_sequences
-from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
 from stop_words import get_stop_words
-import sklearn
-import argparse
-from keras.models import load_model
 
-# parser = argparse.ArgumentParser()
-# parser.add_argument("c", help="continue training")
-# args = parser.parse_args()
-import os
-
-os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 # global variables
-LSTM_N = 128
-EPOCHS = 20
-BATCH_SIZE = 128
-TRAIN_DATA_SET_FILE_NAME = "csv/augmented_train_set.csv"
+HIDDEN = 60
+EPOCHS = 30
+BATCH_SIZE = 64
+TRAIN_DATA_SET_FILE_NAME = "csv/train_data_set.csv"
 VALIDATION_DATA_SET_FILE_NAME = "csv/validation_data_set.csv"
 EMBEDDING_FILE = "../word2vec_model/GoogleNews-vectors-negative300.bin"
 RELATED_QUESTION_ID = "related_question_id"
@@ -84,63 +73,52 @@ def label_to_class(label):
         return 0
 
 
-training_data_frame = pd.read_csv(TRAIN_DATA_SET_FILE_NAME)[0:1000]
-validation_data_frame = pd.read_csv(VALIDATION_DATA_SET_FILE_NAME)
-
+training_data_frame = pd.read_csv(TRAIN_DATA_SET_FILE_NAME)[0:100]
+validation_data_frame = pd.read_csv(VALIDATION_DATA_SET_FILE_NAME)[0:100]
 
 word2vec = KeyedVectors.load_word2vec_format(EMBEDDING_FILE, binary=True)
 stop_words = get_stop_words('en')
 questions_cols = [QUESTION_TEXT, COMMENT_TEXT]
-
-vocabulary = {}
-inverse_vocabulary = ['<unk>']  # '<unk>' will never be used, it is only a placeholder for the [0, 0, ....0] embedding
+VECTOR_DIM = 300
 
 data_frames = [training_data_frame, validation_data_frame]
 for data_frame in data_frames:
     for index, row in data_frame.iterrows():
         for question_col in questions_cols:
-            words_to_numbers = []
+            word_vectors = []
             for word in text_to_words(row[question_col]):
                 if word in stop_words and word not in word2vec.vocab:
                     continue
-                if word not in vocabulary:
-                    vocabulary[word] = len(inverse_vocabulary)
-                    inverse_vocabulary.append(word)
-                words_to_numbers.append(vocabulary[word])
-            data_frame.set_value(index, question_col, words_to_numbers)
+                try:
+                    vector = word2vec.word_vec(word)
+                    word_vectors.append(vector)
+                except Exception as E:
+                    print(E)
+            if len(word_vectors) == 0:
+                word_vectors = np.zeros((1, 300))
+            data_frame.set_value(index, question_col, np.average(word_vectors, axis=0))
         data_frame.set_value(index, RELEVANCE, label_to_class(row[RELEVANCE]))
-
-embedding_dim = 300
-embeddings = 1 * np.random.randn(len(vocabulary) + 1, embedding_dim)
-embeddings[0] = 0
 
 print(training_data_frame[RELEVANCE].describe())
 print("##")
 print(validation_data_frame[RELEVANCE].describe())
 
-for word, index in vocabulary.items():
-    if word in word2vec.vocab:
-        embeddings[index] = word2vec.word_vec(word)
 del word2vec
 
 # prepare training and test data
-max_seq_length = max(training_data_frame[QUESTION_TEXT].map(lambda x: len(x)).max(),
-                     training_data_frame[COMMENT_TEXT].map(lambda x: len(x)).max(),
-                     validation_data_frame[QUESTION_TEXT].map(lambda x: len(x)).max(),
-                     validation_data_frame[COMMENT_TEXT].map(lambda x: len(x)).max())
 X_train = training_data_frame[questions_cols]
 Y_train = training_data_frame[RELEVANCE]
 
 X_validation = validation_data_frame[questions_cols]
 Y_validation = validation_data_frame[RELEVANCE]
-
+print("shape")
 # Split to dicts
-X_train = {'left': X_train[QUESTION_TEXT], 'right': X_train[COMMENT_TEXT]}
-X_validation = {'left': X_validation[QUESTION_TEXT], 'right': X_validation[COMMENT_TEXT]}
+X_train = {'left': np.reshape([list(x) for x in X_train[QUESTION_TEXT].values], (-1, 300)),
+           'right': np.reshape([list(x) for x in X_train[COMMENT_TEXT].values], (-1, 300))}
+X_validation = {'left': np.reshape([list(x) for x in X_validation[QUESTION_TEXT].values], (-1, 300)),
+                'right': np.reshape([list(x) for x in X_validation[COMMENT_TEXT].values], (-1, 300))}
 
-# Zero padding
-for dataset, side in itertools.product([X_train, X_validation], ['left', 'right']):
-    dataset[side] = pad_sequences(dataset[side], maxlen=max_seq_length)
+print(X_train['left'].shape)
 
 # Make sure everything is ok
 assert X_train['left'].shape == X_train['right'].shape
@@ -148,49 +126,46 @@ assert X_validation['left'].shape == X_validation['right'].shape
 assert len(X_train['left']) == len(Y_train)
 assert len(X_validation['left']) == len(Y_validation)
 
-
 # define nn model
-# model = None
-# if args.c:
-#     model = load_model('rnn.m')
-# else:
-# input
-left_input = keras.layers.Input(shape=(max_seq_length,), dtype='int32')
-right_input = keras.layers.Input(shape=(max_seq_length,), dtype='int32')
-# embedding
-embedding_layer = keras.layers.Embedding(len(embeddings), embedding_dim, weights=[embeddings],
-                                         input_length=max_seq_length, trainable=False)
-embedding_left = embedding_layer(left_input)
-embedding_right = embedding_layer(right_input)
-# lstm
-shared_lstm = keras.layers.LSTM(LSTM_N)
-encoded_left = shared_lstm(embedding_left)
-encoded_right = shared_lstm(embedding_right)
-# output
-merged_vector = keras.layers.concatenate([encoded_left, encoded_right], axis=-1)
 
-# malstm_distance = keras.layers.Merge(mode=lambda x: exponent_neg_manhattan_distance(x[0], x[1]),
-#                                      output_shape=lambda x: (x[0][0], 1))([encoded_left, encoded_right])
-x = keras.layers.Dropout(rate=0.5)(merged_vector)
-x = keras.layers.Dense(units=128,activation='elu')(x)
-x = keras.layers.Dropout(rate=0.5)(x)
-x = keras.layers.Dense(units=64,activation='elu')(x)
-x = keras.layers.Dropout(rate=0.5)(x)
-x = keras.layers.Dense(1)(x)
+# input
+left_input = keras.layers.Input(name="question_vector", shape=[VECTOR_DIM], dtype='float32')
+right_input = keras.layers.Input(name="answer_vector", shape=[VECTOR_DIM], dtype='float32')
+# concatenate
+merged_vector = keras.layers.concatenate(name="vectors_concatenation", inputs=[left_input, right_input], axis=-1)
+
+# hidden
+x = keras.layers.Dense(name="hidden_layer", units=HIDDEN, activation='elu')(merged_vector)
+x = keras.layers.Dense(1, name="output")(x)
+
 model = keras.models.Model(inputs=[left_input, right_input], outputs=x)
-model.compile(optimizer=keras.optimizers.SGD(lr=0.002, momentum=0.0, decay=1e-6, nesterov=False, clipvalue=1.25),
+model.compile(optimizer=keras.optimizers.SGD(lr=0.0015, momentum=0.0, decay=1e-6, nesterov=False, clipvalue=1.25),
               loss="mean_squared_error",
               metrics=['accuracy'])
-
-# train
-from keras.utils import plot_model
-plot_model(model, to_file='model.png')
-
 
 trained_model = model.fit([X_train['left'], X_train['right']], Y_train, batch_size=BATCH_SIZE, epochs=EPOCHS,
                           validation_data=([X_validation['left'], X_validation['right']], Y_validation))
 
-model.save('rnn.m')
+from keras.utils import plot_model
+
+plot_model(model, to_file='model.png')
+
+predict_train = model.predict([X_train['left'], X_train['right']])
+predict_train = [int(round(x)) for x in (predict_train.flatten().clip(min=0))]
+Y_train = [int(x) for x in Y_train.values]
+print("Train set accuracy score =", accuracy_score(Y_train, predict_train))
+print("Train set recall score =", recall_score(Y_train, predict_train))
+print("Train set precission score =", precision_score(Y_train, predict_train))
+
+predict_validation = model.predict([X_validation['left'], X_validation['right']])
+predict_validation = [int(round(x)) for x in predict_validation.flatten().clip(min=0)]
+Y_validation = [int(x) for x in Y_validation.values]
+print("Test set accuracy score =", accuracy_score(Y_validation, predict_validation))
+print("Test set recall score =", recall_score(Y_validation, predict_validation))
+print("Test set precission score =", precision_score(Y_validation, predict_validation))
+
+model.save('feedforward.m')
+
 # Plot accuracy
 plt.plot(trained_model.history['acc'])
 plt.plot(trained_model.history['val_acc'])

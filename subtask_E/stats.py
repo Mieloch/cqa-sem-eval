@@ -9,27 +9,7 @@ import signal
 from word2vec_model import word2vec_utils
 from lxml import etree
 from os import path
-
-ORIGINAL_QUESTION_ID = "question_id"
-RELATED_QUESTION_ID = "related_question_id"
-CATEGORY = "category"
-SCORE = "score"
-TAGS = "tags"
-VIEW_COUNT = "view_count"
-USER_ID = "user_id"
-RELEVANCE = "relevance"
-
-LENGTH_DIFFERENCE = "length_difference"
-JACCARD_DISTANCE = "jaccard_distance"
-COSINE_SIMILARITY = "cosine_similarity"
-BIGRAM_SIMILARITY = "bigram_similarity"
-W2V_COSINE_SIMILARITY = "w2v_cosine_similarity"
-
-NO_OF_COMMENTS = "no_of_comments"
-NO_OF_ANSWERS = "no_of_answers"
-TOTAL_ANSWER_UPVOTES = "total_answer_upvotes"
-BEST_ANSWER_UPVOTES = "best_answer_upvotes"
-HAS_ACCEPTED_ANSWER = "has_accepted_answer"
+from columns import *
 
 
 def kill_program(output_file, iteration_num):
@@ -98,7 +78,8 @@ class Questions(object):
                                   for answer in answers]
                 row[TOTAL_ANSWER_UPVOTES] = sum(answers_scores)
                 row[BEST_ANSWER_UPVOTES] = max(answers_scores, default=0)
-                row[HAS_ACCEPTED_ANSWER] = any([bool(answer.get('RELA_ACCEPTED')) for answer in answers])
+                row[HAS_ACCEPTED_ANSWER] = any(
+                    [bool(answer.get('RELA_ACCEPTED')) for answer in answers])
 
                 row[JACCARD_DISTANCE] = round(basic_stats.jaccard_distance(
                     original_question_body, related_question_body), 3)
@@ -149,7 +130,6 @@ def stats(src, dest='Duplicate-Question-stats.csv', model_path='../word2vec_mode
 
     if verbose:
         print("word2vec model loaded.")
-
 
     append = skip > 0
     file_mode = 'a' if append else 'w'

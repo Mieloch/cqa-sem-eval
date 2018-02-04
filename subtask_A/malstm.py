@@ -1,7 +1,6 @@
 import itertools
 import re
-import pydot
-import graphviz
+
 import keras
 import keras.backend as K
 import matplotlib.pyplot as plt
@@ -10,25 +9,22 @@ import numpy as np
 import pandas as pd
 from gensim.models import KeyedVectors
 from keras.preprocessing.sequence import pad_sequences
-from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
 from stop_words import get_stop_words
-import sklearn
-import argparse
-from keras.models import load_model
 
 # parser = argparse.ArgumentParser()
 # parser.add_argument("c", help="continue training")
 # args = parser.parse_args()
-import os
 
-os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 # global variables
 LSTM_N = 128
-EPOCHS = 20
-BATCH_SIZE = 128
-TRAIN_DATA_SET_FILE_NAME = "csv/augmented_train_set.csv"
-VALIDATION_DATA_SET_FILE_NAME = "csv/validation_data_set.csv"
-EMBEDDING_FILE = "../word2vec_model/GoogleNews-vectors-negative300.bin"
+EPOCHS = 100
+BATCH_SIZE = 64
+TRAIN_DATA_SET_FILE_NAME = "train_data_set.csv"
+VALIDATION_DATA_SET_FILE_NAME = "validation_data_set.csv"
+EMBEDDING_FILE = "GoogleNews-vectors-negative300.bin"
 RELATED_QUESTION_ID = "related_question_id"
 RELATED_COMMENT_ID = "related_comment_id"
 QUESTION_TEXT = "related_question_text"
@@ -84,9 +80,8 @@ def label_to_class(label):
         return 0
 
 
-training_data_frame = pd.read_csv(TRAIN_DATA_SET_FILE_NAME)[0:1000]
+training_data_frame = pd.read_csv(TRAIN_DATA_SET_FILE_NAME)
 validation_data_frame = pd.read_csv(VALIDATION_DATA_SET_FILE_NAME)
-
 
 word2vec = KeyedVectors.load_word2vec_format(EMBEDDING_FILE, binary=True)
 stop_words = get_stop_words('en')
@@ -150,47 +145,56 @@ assert len(X_validation['left']) == len(Y_validation)
 
 
 # define nn model
-# model = None
-# if args.c:
-#     model = load_model('rnn.m')
-# else:
+def exponent_neg_manhattan_distance(left, right):
+    ''' Helper function for the similarity estimate of the LSTMs outputs'''
+    return K.exp(-K.sum(K.abs(left - right), axis=1, keepdims=True))
+
+
 # input
-left_input = keras.layers.Input(shape=(max_seq_length,), dtype='int32')
-right_input = keras.layers.Input(shape=(max_seq_length,), dtype='int32')
+left_input = keras.layers.Input(name="question", shape=(max_seq_length,), dtype='int32')
+right_input = keras.layers.Input(name="answer", shape=(max_seq_length,), dtype='int32')
 # embedding
-embedding_layer = keras.layers.Embedding(len(embeddings), embedding_dim, weights=[embeddings],
+embedding_layer = keras.layers.Embedding(len(embeddings), embedding_dim, weights=[embeddings], name="embedding_layer",
                                          input_length=max_seq_length, trainable=False)
 embedding_left = embedding_layer(left_input)
 embedding_right = embedding_layer(right_input)
 # lstm
-shared_lstm = keras.layers.LSTM(LSTM_N)
-encoded_left = shared_lstm(embedding_left)
-encoded_right = shared_lstm(embedding_right)
+left_lstm = keras.layers.LSTM(LSTM_N, name="question_recurrent_encoder")
+right_lstm = keras.layers.LSTM(LSTM_N, name="answer_recurrent_encoder")
+encoded_left = left_lstm(embedding_left)
+encoded_right = right_lstm(embedding_right)
 # output
-merged_vector = keras.layers.concatenate([encoded_left, encoded_right], axis=-1)
+malstm_distance = keras.layers.Merge(name="manhattan_distance_output",mode=lambda x: exponent_neg_manhattan_distance(x[0], x[1]),
+                                     output_shape=lambda x: (x[0][0], 1))([encoded_left, encoded_right])
 
-# malstm_distance = keras.layers.Merge(mode=lambda x: exponent_neg_manhattan_distance(x[0], x[1]),
-#                                      output_shape=lambda x: (x[0][0], 1))([encoded_left, encoded_right])
-x = keras.layers.Dropout(rate=0.5)(merged_vector)
-x = keras.layers.Dense(units=128,activation='elu')(x)
-x = keras.layers.Dropout(rate=0.5)(x)
-x = keras.layers.Dense(units=64,activation='elu')(x)
-x = keras.layers.Dropout(rate=0.5)(x)
-x = keras.layers.Dense(1)(x)
-model = keras.models.Model(inputs=[left_input, right_input], outputs=x)
-model.compile(optimizer=keras.optimizers.SGD(lr=0.002, momentum=0.0, decay=1e-6, nesterov=False, clipvalue=1.25),
+model = keras.models.Model(inputs=[left_input, right_input], outputs=malstm_distance)
+model.compile(optimizer=keras.optimizers.Adadelta(clipnorm=1.25),
               loss="mean_squared_error",
               metrics=['accuracy'])
 
 # train
-from keras.utils import plot_model
-plot_model(model, to_file='model.png')
-
-
 trained_model = model.fit([X_train['left'], X_train['right']], Y_train, batch_size=BATCH_SIZE, epochs=EPOCHS,
                           validation_data=([X_validation['left'], X_validation['right']], Y_validation))
 
-model.save('rnn.m')
+# from keras.utils import plot_model
+#
+# plot_model(model, to_file='model.png')
+
+predict_train = model.predict([X_train['left'], X_train['right']])
+predict_train = [int(round(x)) for x in (predict_train.flatten().clip(min=0))]
+Y_train = [int(x) for x in Y_train.values]
+print("Train set accuracy score =", accuracy_score(Y_train, predict_train))
+print("Train set recall score =", recall_score(Y_train, predict_train))
+print("Train set precission score =", precision_score(Y_train, predict_train))
+
+predict_validation = model.predict([X_validation['left'], X_validation['right']])
+predict_validation = [int(round(x)) for x in predict_validation.flatten().clip(min=0)]
+Y_validation = [int(x) for x in Y_validation.values]
+print("Test set accuracy score =", accuracy_score(Y_validation, predict_validation))
+print("Test set recall score =", recall_score(Y_validation, predict_validation))
+print("Test set precission score =", precision_score(Y_validation, predict_validation))
+
+model.save('malstm.m')
 # Plot accuracy
 plt.plot(trained_model.history['acc'])
 plt.plot(trained_model.history['val_acc'])
